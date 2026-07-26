@@ -8,10 +8,6 @@ type HeroSectionProps = {
   contact: ContactChannels;
 };
 
-/**
- * Copy below is placeholder marketing text pending business-approved wording
- * (see public/images/pousada/README.md and src/data/pousada-content.ts).
- */
 export function HeroSection({ contact }: HeroSectionProps) {
   return (
     <section id="inicio" aria-labelledby="hero-heading" className={styles.hero}>
@@ -21,7 +17,8 @@ export function HeroSection({ contact }: HeroSectionProps) {
           Uma pousada para viver a natureza e celebrar momentos especiais
         </Heading>
         <p className={styles.lead}>
-          Texto de exemplo a substituir pela proposta de valor aprovada pelo negócio.
+          Casarão colonial do século XIX (datado de 1865 ou 1885), que serviu de rota do ouro 
+          e abrigou figuras famosas como a atriz Maria Della Costa e o cantor Djavan.
         </p>
         <WhatsAppContact
           contact={contact}

@@ -1,18 +1,16 @@
 import type { PousadaContent } from "@/domain/content";
 
 /**
- * Placeholder content pending business approval (see FR-011, FR-006 and
- * public/images/pousada/README.md). Every value below MUST be replaced by text,
- * photos, contacts and testimonials approved by the pousada before this content
- * is shown to real visitors. Testimonials stay empty until approved records
- * exist, so the UI exercises its documented empty/fallback states.
+ * Content approved by the pousada (see FR-011, FR-006 and
+ * public/images/pousada/README.md). Remaining gaps are tracked in the
+ * "Pending Before Public Launch" section of
+ * specs/001-pousada-landing-page/tasks.md (e.g. event-space photos, an
+ * exact GPS pin for the address, phone/email as additional contact
+ * channels).
  *
- * PHOTO STATUS (2026-07-26): all 7 rooms now have real, approved photos and
- * names derived from the approved file names; `summary` text is still
- * placeholder copy pending approved descriptions from the business. The
- * wedding venue also has approved example photos of the grounds — see
- * public/images/pousada/README.md and the "Pending Before Public Launch"
- * section of tasks.md for tracking.
+ * CONTENT STATUS (2026-07-26): all 7 rooms have real photos, names and
+ * descriptions; the wedding venue has approved example photos and an
+ * approved narrative; WhatsApp contact is real.
  *
  * Every room shares breakfast and pool access, so `amenities` standardizes
  * "Café da manhã incluso" and "Acesso à piscina" across all rooms in addition
@@ -23,13 +21,14 @@ export const pousadaContent: PousadaContent = {
     {
       id: "quarto-duplo-deluxe-vista-mar",
       name: "Quarto Duplo Deluxe com Vista do Mar",
-      // Real name and photos approved; summary is still placeholder copy.
-      summary: "Descrição de exemplo a substituir por texto aprovado pelo negócio.",
+      summary: "Excelente quarto com vista deslumbrante para o mar.",
       amenities: [
         "Café da manhã incluso",
         "Acesso à piscina",
         "Wi-Fi",
         "Ar-condicionado",
+        "Banheiro privativo",
+        "Frigobar",
         "Vista do mar",
       ],
       images: [
@@ -69,9 +68,14 @@ export const pousadaContent: PousadaContent = {
     {
       id: "quarto-duplo-pedra",
       name: "Quarto Duplo Pedra",
-      // Real name and photo approved; summary is still placeholder copy.
-      summary: "Descrição de exemplo a substituir por texto aprovado pelo negócio.",
-      amenities: ["Café da manhã incluso", "Acesso à piscina", "Wi-Fi", "Ar-condicionado"],
+      summary: "Excelente quarto com integração natural à rocha, proporcionando uma experiência única.",
+      amenities: [
+        "Café da manhã incluso",
+        "Acesso à piscina",
+        "Wi-Fi",
+        "Ar-condicionado",
+        "Banheiro privativo",
+      ],
       images: [
         {
           src: "/images/pousada/quartos/quarto-duplo-pedra-01.jpg",
@@ -85,9 +89,14 @@ export const pousadaContent: PousadaContent = {
     {
       id: "quarto-duplo-vista-jardim",
       name: "Quarto Duplo com Vista do Jardim",
-      // Real name and photos approved; summary is still placeholder copy.
-      summary: "Descrição de exemplo a substituir por texto aprovado pelo negócio.",
-      amenities: ["Café da manhã incluso", "Acesso à piscina", "Wi-Fi", "Vista do jardim"],
+      summary: "Excelente quarto com vista deslumbrante para o jardim.",
+      amenities: [
+        "Café da manhã incluso",
+        "Acesso à piscina",
+        "Wi-Fi",
+        "Ar-condicionado",
+        "Banheiro privativo",
+      ],
       images: [
         {
           src: "/images/pousada/quartos/quarto-duplo-vista-jardim-01.jpg",
@@ -113,14 +122,13 @@ export const pousadaContent: PousadaContent = {
     {
       id: "quarto-quadruplo-familia",
       name: "Quarto Quádruplo Família",
-      // Real name and photos approved; summary is still placeholder copy.
-      summary: "Descrição de exemplo a substituir por texto aprovado pelo negócio.",
+      summary: "Excelente quarto espaçoso para famílias, com acomodações confortáveis.",
       amenities: [
         "Café da manhã incluso",
         "Acesso à piscina",
         "Wi-Fi",
         "Ar-condicionado",
-        "Cama adicional",
+        "Banheiro privativo",
       ],
       images: [
         {
@@ -153,14 +161,13 @@ export const pousadaContent: PousadaContent = {
     {
       id: "quarto-triplo-classico",
       name: "Quarto Triplo Clássico",
-      // Real name and photos approved; summary is still placeholder copy.
-      summary: "Descrição de exemplo a substituir por texto aprovado pelo negócio.",
+      summary: "Excelente quarto com acomodações clássicas e confortáveis para três pessoas.",
       amenities: [
         "Café da manhã incluso",
         "Acesso à piscina",
         "Wi-Fi",
-        "Varanda privativa",
-        "Frigobar",
+        "Ar-condicionado",
+        "Banheiro privativo",
       ],
       images: [
         {
@@ -181,9 +188,14 @@ export const pousadaContent: PousadaContent = {
     {
       id: "quarto-triplo-vista-jardim",
       name: "Quarto Triplo com Vista do Jardim",
-      // Real name and photos approved; summary is still placeholder copy.
-      summary: "Descrição de exemplo a substituir por texto aprovado pelo negócio.",
-      amenities: ["Café da manhã incluso", "Acesso à piscina", "Wi-Fi", "Vista do jardim"],
+      summary: "Excelente quarto com vista deslumbrante para o jardim, ideal para grupos de três pessoas.",
+      amenities: [
+        "Café da manhã incluso",
+        "Acesso à piscina",
+        "Wi-Fi",
+        "Ar-condicionado",
+        "Banheiro privativo",
+      ],
       images: [
         {
           src: "/images/pousada/quartos/quarto-triplo-vista-jardim-01.jpg",
@@ -209,9 +221,14 @@ export const pousadaContent: PousadaContent = {
     {
       id: "quarto-triplo-vista-piscina",
       name: "Quarto Triplo com Vista da Piscina",
-      // Real name and photos approved; summary is still placeholder copy.
-      summary: "Descrição de exemplo a substituir por texto aprovado pelo negócio.",
-      amenities: ["Café da manhã incluso", "Acesso à piscina", "Wi-Fi", "Vista da piscina"],
+      summary: "Excelente quarto com vista deslumbrante para a piscina, ideal para grupos de três pessoas.",
+      amenities: [
+        "Café da manhã incluso",
+        "Acesso à piscina",
+        "Wi-Fi",
+        "Ar-condicionado",
+        "Banheiro privativo",
+      ],
       images: [
         {
           src: "/images/pousada/quartos/quarto-triplo-vista-piscina-01.jpg",
@@ -238,13 +255,12 @@ export const pousadaContent: PousadaContent = {
   eventSpaces: [
     {
       id: "casamentos",
-      name: "Casamentos na Pousada (placeholder)",
+      name: "Casamentos na Pousada Enseada Jatobá",
       purpose:
-        "Narrativa de exemplo a substituir pela proposta aprovada de casamentos: cerimônia " +
-        "ao ar livre cercada pela natureza, recepção personalizável e acompanhamento próximo " +
-        "da equipe do início ao grande dia.",
-      // Approved example photos of the wedding venue/grounds; purpose text above is
-      // still placeholder copy pending the business's approved wedding narrative.
+        "Cerimônia ao ar livre cercada pela natureza, recepção personalizável e acompanhamento próximo " +
+        "da equipe do início ao grande dia." +
+        " A pousada oferece um espaço versátil para casamentos, com opções de decoração, catering e " +
+        "serviços de apoio para tornar cada celebração única e memorável.",
       images: [
         {
           src: "/images/pousada/quartos/local-casamento-01.jpg",
@@ -288,19 +304,19 @@ export const pousadaContent: PousadaContent = {
     },
     {
       id: "eventos",
-      name: "Espaço para Eventos (placeholder)",
+      name: "Espaço para Eventos em Geral",
       purpose:
-        "Narrativa de exemplo a substituir pela proposta aprovada de eventos: espaço " +
-        "versátil para aniversários, confraternizações corporativas e encontros familiares, " +
-        "com estrutura de apoio e ambientação natural.",
+        "Espaço versátil para aniversários, confraternizações corporativas e encontros familiares, " +
+        "com estrutura de apoio e ambientação natural." +
+        " A pousada oferece um espaço adaptável para eventos diversos, com opções de catering, " +
+        "decoração e serviços de apoio para atender às necessidades de cada ocasião.",
+      // Narrative approved; photos for this (non-wedding) event space are still
+      // pending business approval — see "Pending Before Public Launch" in tasks.md.
       images: [],
       contactContext: "event",
       isFeatured: false,
     },
   ],
-  // Only one of the three testimonials supplied so far is included below; the
-  // other two were identical duplicates and are pending a corrected second
-  // quote from the business before being added (see chat/PR notes).
   testimonials: [
     {
       id: "testimonial-camila-andrade",
@@ -331,7 +347,7 @@ export const pousadaContent: PousadaContent = {
     },
   ],
   contact: {
-    whatsappNumber: "+5500000000000",
+    whatsappNumber: "+5532988928939",
     address: "BR-101 - Km 570, Paraty, CEP 23970-000",
   },
   location: {

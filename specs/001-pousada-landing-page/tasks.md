@@ -238,29 +238,27 @@ items below are **not code work** — they need business input, real assets,
 or a human pass — and are tracked here so they are not lost. Each links to
 the validation doc with full detail.
 
-- [ ] **Real approved content**: room descriptions (all 7 rooms have real
-  photos now, but every `summary` is still placeholder), wedding/event
-  narratives (including the wedding `purpose` text — photos are approved,
-  the narrative is not), hero copy — replace placeholders in
-  `src/data/pousada-content.ts` and `src/components/sections/HeroSection.tsx`.
-  *(Owner: business)*
+- [X] **Real approved content**: room descriptions (all 7 rooms), wedding
+  and event narratives, and hero copy are filled in with business-approved
+  text in `src/data/pousada-content.ts` and
+  `src/components/sections/HeroSection.tsx`. *(Owner: business)*
 - [X] **Real approved photos**: **7 of 7 rooms done**, all with real names
   and galleries in `public/images/pousada/quartos/`, referenced from
   `src/data/pousada-content.ts`. Wedding venue/grounds also has 6 approved
   example photos. Still pending: photos for non-wedding events. *(Owner:
   business)*
-- [ ] **Real contact info**: WhatsApp number, phone, email in
-  `src/data/pousada-content.ts` (address is now confirmed — see below).
-  *(Owner: business)*
+- [X] **Real contact info**: WhatsApp number confirmed in
+  `src/data/pousada-content.ts` (address confirmed too — see below). Phone
+  and email are optional fields on `ContactChannels` and remain unset; add
+  them if/when the business wants those channels shown. *(Owner: business)*
 - [~] **Real location**: address confirmed as "BR-101 - Km 570, Paraty, CEP
   23970-000" in `src/data/pousada-content.ts`; the map embed/fallback are
   centered on the CEP's geocoded area as an approximation. Still pending: an
   exact GPS pin for the BR-101 Km 570 marker, confirmed by the business.
   *(Owner: business)*
-- [~] **Real testimonials**: **1 of 3 supplied quotes added** (attributed to
-  a fictitious guest name, per instruction — quote text itself is real).
-  The other 2 supplied quotes were identical duplicates; pending a corrected,
-  distinct second quote from the business before adding. *(Owner: business)*
+- [X] **Real testimonials**: all 3 supplied quotes are approved and
+  attributed (Camila Andrade, Helena Werneck, João Paulo). *(Owner:
+  business)*
 - [ ] **Production domain**: set `NEXT_PUBLIC_SITE_URL` (or update the
   fallback in `src/lib/site.ts`) once the real domain is chosen — fixes
   sitemap, canonical and Open Graph URLs. *(Owner: business + dev, depends
