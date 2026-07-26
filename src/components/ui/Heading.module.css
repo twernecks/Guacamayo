@@ -1,0 +1,21 @@
+.heading {
+  font-family: var(--font-heading);
+  color: var(--color-foreground);
+  text-wrap: balance;
+}
+
+.xl {
+  font-size: clamp(2rem, 1.5rem + 2vw, 3.25rem);
+}
+
+.lg {
+  font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem);
+}
+
+.md {
+  font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.75rem);
+}
+
+.sm {
+  font-size: 1.125rem;
+}

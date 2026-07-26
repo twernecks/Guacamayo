@@ -1,0 +1,109 @@
+Crie a constituição inicial deste projeto.
+
+Contexto:
+O produto começa como um frontend em React, inicialmente uma landing page institucional para uma pousada. No futuro, ele evoluirá para uma aplicação web/SaaS com backend, APIs, 
+autenticação e regras de negócio. A constituição deve orientar decisões presentes sem impedir essa evolução.
+
+Objetivo inicial:
+Criar uma landing page de alta qualidade para divulgar a pousada, seus quartos, comodidades, localização e o serviço de locação de espaços para casamentos e eventos. 
+O site terá conteúdo visual, galerias de fotos, chamadas para reserva/contato e boa experiência em dispositivos móveis.
+
+Defina princípios obrigatórios, claros, verificáveis e com justificativa, cobrindo:
+
+1. Frontend React moderno
+   - Usar React com TypeScript.
+   - Priorizar componentes pequenos, reutilizáveis, acessíveis e orientados ao domínio.
+   - Separar componentes visuais, páginas/seções, hooks, serviços e tipos.
+   - Evitar componentes excessivamente grandes e lógica de negócio acoplada à interface.
+
+2. Estado e dados
+   - Manter estado local quando possível.
+   - Introduzir estado global apenas quando houver necessidade real e documentada.
+   - Preparar uma camada de serviços/repositórios para que dados inicialmente estáticos possam ser substituídos futuramente por APIs sem reescrever a interface.
+   - Não implementar backend nesta fase.
+
+3. Qualidade e manutenção
+   - TypeScript estrito, lint, formatação automática e convenções consistentes.
+   - Testes proporcionais ao risco: lógica crítica, componentes interativos e fluxos de conversão devem ser testáveis.
+   - Revisões devem avaliar acessibilidade, responsividade, performance, segurança básica e legibilidade.
+
+4. UX, design e conteúdo
+   - Mobile-first, responsivo e acessível conforme WCAG AA.
+   - Foco em conversão: reserva, WhatsApp, formulário ou outro canal de contato.
+   - Imagens devem ter propósito, texto alternativo, carregamento otimizado e não comprometer desempenho.
+   - Interface deve transmitir hospitalidade, confiança e qualidade, sem sacrificar clareza ou velocidade.
+
+5. SEO, performance e observabilidade
+   - Estrutura semântica, metadados, URLs amigáveis e conteúdo indexável.
+   - Definir orçamento de performance e priorizar Core Web Vitals.
+   - Evitar dependências desnecessárias e assets excessivamente pesados.
+   - Preparar pontos de integração para analytics e monitoramento, respeitando privacidade e consentimento.
+
+6. Evolução para SaaS
+   - Preservar fronteiras claras entre apresentação, domínio e integração externa.
+   - Planejar contratos de dados e tratamento consistente de carregamento, erro e vazio.
+   - Não antecipar complexidade de backend, mas evitar decisões que bloqueiem API, autenticação, pagamentos, reservas ou painel administrativo no futuro.
+
+7. Governança
+   - Definir como mudanças na constituição são propostas, revisadas, versionadas e verificadas nos planos, especificações e tarefas.
+   - Atualizar os templates do Spec Kit conforme necessário.
+   - Gere o relatório de impacto/sincronização exigido pela skill.
+   
+8. Orquestração de capacidades especializadas
+   - Definir que a constituição governa critérios de qualidade, e não duplica instruções operacionais de skills.
+   - Para páginas públicas, acessibilidade, SEO/performance e QA de frontend são gates obrigatórios antes da entrega.
+   - Para criação ou alteração relevante de UI, aplicar as capacidades de UX/UI, conteúdo de conversão e frontend React conforme o escopo.
+   - Skills genéricas podem ser reutilizadas globalmente; skills específicas do domínio, marca, APIs ou regras de negócio devem ser versionadas no repositório.
+   - MCPs e integrações externas só devem ser introduzidos quando houver uma necessidade concreta, credenciais/autorização e um responsável definido.
+
+Tecnologias:
+- React e TypeScript são obrigatórios.
+- Recomende e registre uma decisão arquitetural para o framework/build tool mais adequado à landing page, considerando SEO e futura evolução, justificando a escolha.
+- Utilize práticas modernas e estáveis; evite escolher ferramentas apenas por moda.
+
+A constituição deve ser objetiva, prescritiva e usar MUST/SHOULD com critérios verificáveis. Não deixe placeholders sem justificativa.
+
+
+####################
+Exemplo de SITES:
+https://br.pinterest.com/mucuriwebsites/site-hotel/
+https://www.ait-themes.club/wordpress-theme/?utm_source=Pinterest&utm_medium=organic
+####################
+
+
+
+features futuras
+
+- colocar um campo para mudar o site para espanhol e inglês e/ou voltar para português
+- criar o backend 
+- pacotes adicionais na hospedagem ( ex.: passeio de barco + jantares especiais e etc);
+- criar interação com chat para tirar dúvidas sobre a pousada (integração com LLM )
+- colocar nome para cada quarto: quarto1:quarto ensejada jatoba , quarto2:quarto pedra, quarto3: quarto janela e etc
+- criar uma automação que le uma planilha previamente pronta com nome e numero de telefone, cria as mensgens 
+e dispare uma a uma manualmente para o whatssapp destiono. (Validar se para disparos automáticos via chatbot por exemplo, se existe custo ou 
+diretamente pela api do whatssapp)
+
+Nome quartos
+Quarto-Triplo-Tom-Vista-Para-a-Piscina
+
+Quarto-Duplo-com-Vista-do-Jardim
+
+Quarto-Duplo-Deluxe-com-Vista-do-Mar
+
+Quarto-Familia
+
+Quarto-Triplo-com-Vista-para-a-Piscina
+
+Quarto-Triplo-Classico
+
+Quarto-Triplo-Classico
+
+Depoimentos
+A recepção foi excelente, pessoas educadas, atenciosas, prestativas, lugar maravilhoso, contato com a natureza e um custo benefício q vale a pena, recomendo...
+
+“Vista linda no entorno da pousada , arquitetura bonita , limpeza excelente, próximo ao centro de Paraty, boa localização”
+
+Lugar maravilhoso para quem quer uma conexão com a natureza.Propietarios Enzo e Robson super receptivos e acolhedores,trazendo com pequenos detalhes o diferencial.
+
+“Recepção calorosa, lugar muito agradável para relaxar.
+Proprietários muitos disponíveis simpáticos perfeito.”

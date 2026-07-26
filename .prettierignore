@@ -1,0 +1,17 @@
+node_modules/
+.next/
+out/
+build/
+coverage/
+playwright-report/
+test-results/
+package-lock.json
+public/
+
+# Spec-kit and agent tooling content is managed by its own workflows, not this app's formatter.
+.specify/
+.claude/
+.agents/
+specs/
+AGENTS.md
+CLAUDE.md

@@ -40,7 +40,17 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- [ ] React with strict TypeScript is used; presentation, hooks, typed services and
+      domain types have clear boundaries.
+- [ ] State is local by default; every global state, dependency or added complexity has
+      a documented need and simpler alternative considered.
+- [ ] Public-page conversion, responsive behavior, WCAG 2.2 AA implications, metadata
+      and image strategy are specified.
+- [ ] A performance budget and Core Web Vitals targets are measurable for this feature.
+- [ ] Data contracts and loading, error and empty states preserve future API integration
+      without implementing deferred backend scope.
+- [ ] Required capability gates (accessibility, SEO/performance and frontend QA) are
+      planned, or an approved, time-bounded exception is recorded.
 
 ## Project Structure
 

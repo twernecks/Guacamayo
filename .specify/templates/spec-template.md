@@ -98,6 +98,16 @@
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
 - **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
+### Public Experience and Quality Requirements *(required for public UI)*
+
+- **Conversion path**: [Primary CTA and its expected outcome]
+- **Responsive behavior**: [Mobile, tablet and desktop requirements]
+- **Accessibility**: [Applicable WCAG 2.2 AA requirements and interaction considerations]
+- **SEO and metadata**: [Indexability, title/description, canonical and structured-data needs]
+- **Performance budget**: [Core Web Vitals targets and asset constraints]
+- **Content and media facts**: [Approved source, license and alt-text requirements]
+- **Data states**: [Loading, error and empty behavior when data is not static]
+
 ### Key Entities *(include if feature involves data)*
 
 - **[Entity 1]**: [What it represents, key attributes without implementation]

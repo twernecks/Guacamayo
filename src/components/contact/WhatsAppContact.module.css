@@ -1,0 +1,16 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.fallback {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.fallback a {
+  font-weight: 600;
+  text-decoration: underline;
+}
