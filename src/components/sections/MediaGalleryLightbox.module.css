@@ -47,26 +47,8 @@
 }
 
 .body {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
   padding: var(--space-4);
   overflow: auto;
-}
-
-.navButton {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 2.75rem;
-  min-height: 2.75rem;
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  background: transparent;
-  cursor: pointer;
-  font-size: 1.5rem;
-  line-height: 1;
 }
 
 .figure {
@@ -108,9 +90,56 @@
 }
 
 .position {
-  text-align: center;
-  margin: 0;
   padding: 0 var(--space-4) var(--space-4);
-  color: var(--color-muted);
-  font-size: 0.875rem;
+}
+
+/*
+ * Mobile: the enlarged view grows from a small fixed-size card to
+ * near-fullscreen (Clarifications: ~92% of the viewport on each axis),
+ * while keeping a visible backdrop strip wide/tall enough to tap-outside
+ * and close, and compacting the header/caption/position chrome instead of
+ * hiding it (Clarifications).
+ */
+@media (max-width: 47.9375rem) {
+  .dialog {
+    width: 92vw;
+    height: 92vh;
+    max-height: 92vh;
+  }
+
+  .content {
+    max-height: 92vh;
+  }
+
+  .header {
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .body {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .position {
+    padding: 0 var(--space-3) var(--space-2);
+  }
+
+  .image {
+    /* A definite `height` (not just `max-height`) gives the browser a
+       concrete size to lay out and decode against up front, scoped to
+       mobile where the dialog itself is already a fixed 92vh/92vw box by
+       design (Clarifications), so this doesn't change desktop's
+       content-sized shape (FR-003). With `height: auto` here, the actual
+       size depended on the auto-sized flex chain around it (row -> figure
+       -> img), which is circular -- verified in a real browser to make
+       Chromium decode the JPEG at a much smaller scale than the source
+       file, rendering a blurry, tiny photo instead of a legible one
+       (FR-001). */
+    height: 68vh;
+    max-height: none;
+  }
 }

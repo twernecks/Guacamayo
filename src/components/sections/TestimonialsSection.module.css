@@ -9,26 +9,35 @@
   color: var(--color-muted);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-6);
+.carouselRow {
   margin-top: var(--space-8);
 }
 
-@media (min-width: 40rem) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.position {
+  margin-top: var(--space-3);
 }
 
-@media (min-width: 60rem) {
+/* Mobile (default): horizontal swipe carousel with native scroll-snap. */
+.grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
   .grid {
-    grid-template-columns: repeat(3, 1fr);
+    scroll-behavior: auto;
   }
 }
 
 .card {
+  flex: 0 0 88%;
+  scroll-snap-align: center;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -42,6 +51,10 @@
   margin: 0;
   font-family: var(--font-heading);
   font-style: italic;
+  /* Keeps an unusually long testimonial from growing the card past a
+     readable height; the attribution below always stays visible. */
+  max-height: 40vh;
+  overflow-y: auto;
 }
 
 .attribution {
@@ -52,4 +65,38 @@
 .experience {
   text-transform: capitalize;
   font-weight: 600;
+}
+
+/* Tablet/desktop: back to the original grid, carousel controls hidden. */
+@media (min-width: 48rem) {
+  .carouselRow > button {
+    display: none;
+  }
+
+  .position {
+    display: none;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    overflow-x: visible;
+    scroll-snap-type: none;
+  }
+
+  .card {
+    flex: initial;
+    scroll-snap-align: none;
+  }
+
+  .quote {
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
+@media (min-width: 60rem) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

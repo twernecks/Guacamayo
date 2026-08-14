@@ -38,3 +38,28 @@ if (!HTMLDialogElement.prototype.close) {
     this.dispatchEvent(new Event("close"));
   };
 }
+
+// jsdom does not implement IntersectionObserver (used by the testimonials
+// carousel to track which card is in view while swiping). Real intersection
+// computation is a layout concern verified by Playwright, not jsdom; this
+// no-op stub only prevents a ReferenceError so component tests can render.
+if (typeof window.IntersectionObserver === "undefined") {
+  class IntersectionObserverStub implements IntersectionObserver {
+    readonly root: Element | Document | null = null;
+    readonly rootMargin: string = "";
+    readonly thresholds: ReadonlyArray<number> = [];
+    observe = vi.fn();
+    unobserve = vi.fn();
+    disconnect = vi.fn();
+    takeRecords = vi.fn(() => []);
+  }
+  window.IntersectionObserver = IntersectionObserverStub as unknown as typeof IntersectionObserver;
+}
+
+// jsdom does not implement Element.scrollIntoView (used by the testimonials
+// carousel's prev/next buttons and, more generally, keyboard navigation of
+// scroll-snap carousels). No-op is sufficient here: the resulting scroll
+// position is a layout concern verified by Playwright, not jsdom.
+if (!Element.prototype.scrollIntoView) {
+  Element.prototype.scrollIntoView = vi.fn();
+}

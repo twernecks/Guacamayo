@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "serve out -l 3000",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
@@ -36,6 +36,7 @@
     "jest-axe": "^10.0.0",
     "jsdom": "^29.1.1",
     "prettier": "^3.9.6",
+    "serve": "^14.2.6",
     "typescript": "^5",
     "vitest": "^4.1.10"
   }

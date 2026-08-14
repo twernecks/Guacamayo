@@ -37,6 +37,27 @@ describe("MediaGalleryLightbox", () => {
     expect(within(dialog).getByAltText("Foto 2 do quarto")).toBeInTheDocument();
   });
 
+  it("keeps the title, close button and position indicator simultaneously present (none is hidden to save space, including at the compact mobile size)", () => {
+    render(
+      <MediaGalleryLightbox
+        images={IMAGES}
+        itemLabel="Fotos de Quarto Duplo Deluxe com Vista do Mar"
+        initialIndex={0}
+        isOpen
+        onClose={vi.fn()}
+      />,
+    );
+
+    // The mobile presentation only reduces spacing via CSS (see
+    // MediaGalleryLightbox.module.css); it never conditionally removes any
+    // of these from the accessibility tree, at any viewport.
+    expect(
+      screen.getByRole("heading", { name: "Fotos de Quarto Duplo Deluxe com Vista do Mar" }),
+    ).toBeVisible();
+    expect(screen.getByRole("button", { name: "Fechar" })).toBeVisible();
+    expect(screen.getByText("1 de 3")).toBeVisible();
+  });
+
   it("shows position indicator only when there is more than one photo", () => {
     const { rerender } = render(
       <MediaGalleryLightbox

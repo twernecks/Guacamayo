@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState, type MouseEvent } from "react";
 import Image from "next/image";
 import type { Media } from "@/domain/content";
+import { CarouselControls } from "@/components/ui/CarouselControls";
 import styles from "./MediaGalleryLightbox.module.css";
 
 type MediaGalleryLightboxProps = {
@@ -160,18 +161,16 @@ export function MediaGalleryLightbox({
           </button>
         </div>
 
-        <div className={styles.body}>
-          {total > 1 ? (
-            <button
-              type="button"
-              className={styles.navButton}
-              aria-label="Foto anterior"
-              onClick={goPrevious}
-            >
-              ‹
-            </button>
-          ) : null}
-
+        <CarouselControls
+          activeIndex={activeIndex}
+          total={total}
+          onPrevious={goPrevious}
+          onNext={goNext}
+          previousLabel="Foto anterior"
+          nextLabel="Próxima foto"
+          rowClassName={styles.body}
+          positionClassName={styles.position}
+        >
           <figure className={styles.figure}>
             {imageFailed ? (
               <div className={styles.imageFallback}>
@@ -183,7 +182,6 @@ export function MediaGalleryLightbox({
                 alt={image.alt}
                 width={image.width}
                 height={image.height}
-                sizes="(min-width: 60rem) 56rem, 90vw"
                 className={styles.image}
                 onError={() =>
                   setFailedSrcs((previous) => {
@@ -198,24 +196,7 @@ export function MediaGalleryLightbox({
               <figcaption className={styles.caption}>{image.caption}</figcaption>
             ) : null}
           </figure>
-
-          {total > 1 ? (
-            <button
-              type="button"
-              className={styles.navButton}
-              aria-label="Próxima foto"
-              onClick={goNext}
-            >
-              ›
-            </button>
-          ) : null}
-        </div>
-
-        {total > 1 ? (
-          <p className={styles.position} aria-live="polite">
-            {activeIndex + 1} de {total}
-          </p>
-        ) : null}
+        </CarouselControls>
       </div>
     </dialog>
   );

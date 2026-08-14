@@ -7,7 +7,7 @@ test.describe("Location map consent", () => {
     await page.goto("/#localizacao");
 
     const section = page.locator("#localizacao");
-    await expect(section).toContainText(/endereço|confirmar/i);
+    await expect(section).toContainText(/BR-101|Paraty/i);
     await expect(section.locator("iframe")).toHaveCount(0);
 
     const fallbackLink = section.getByRole("link", { name: /outro serviço de mapas/i });
