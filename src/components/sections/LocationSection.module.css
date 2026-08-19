@@ -35,11 +35,29 @@
   text-decoration: underline;
 }
 
+.embeds {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
 .map {
   width: 100%;
   max-width: 48rem;
   aspect-ratio: 16 / 9;
-  margin-top: var(--space-6);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
+}
+
+.streetView {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 48rem;
+}
+
+.streetViewNotice {
+  color: var(--color-muted);
+  font-size: 0.85rem;
 }

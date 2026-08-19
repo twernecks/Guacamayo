@@ -1,31 +1,31 @@
 import type { ContactIntent, ContactInterest } from "@/domain/contact-intent";
+import type { LanguageCode } from "@/i18n/languages";
+import { MESSAGES } from "@/i18n/messages";
 
-const INTEREST_LABELS: Record<ContactInterest, string> = {
-  stay: "hospedagem",
-  event: "evento",
-  wedding: "casamento",
-};
-
-export function interestLabel(interest: ContactInterest): string {
-  return INTEREST_LABELS[interest];
+export function interestLabel(interest: ContactInterest, language: LanguageCode): string {
+  return MESSAGES[language].contactInterest[interest];
 }
 
-export function buildWhatsAppMessage(intent: ContactIntent): string {
+export function buildWhatsAppMessage(intent: ContactIntent, language: LanguageCode): string {
+  const t = MESSAGES[language];
   const lines = [
-    `Olá! Meu nome é ${intent.name}.`,
-    `Tenho interesse em: ${interestLabel(intent.interest)}.`,
-    `Telefone para contato: ${intent.phone}.`,
+    t.whatsappMessage.greetingWithName(intent.name),
+    t.whatsappMessage.interestLine(interestLabel(intent.interest, language)),
+    t.whatsappMessage.phoneLine(intent.phone),
   ];
 
   if (intent.message) {
-    lines.push(`Mensagem: ${intent.message}`);
+    lines.push(t.whatsappMessage.messageLine(intent.message));
   }
 
   return lines.join("\n");
 }
 
-export function buildContextualWhatsAppMessage(interest: ContactInterest): string {
-  return `Olá! Tenho interesse em ${interestLabel(interest)} na pousada.`;
+export function buildContextualWhatsAppMessage(
+  interest: ContactInterest,
+  language: LanguageCode,
+): string {
+  return MESSAGES[language].whatsappMessage.contextualGreeting(interestLabel(interest, language));
 }
 
 function sanitizeWhatsAppNumber(whatsappNumber: string): string {
@@ -41,13 +41,15 @@ export function buildWhatsAppUrl(whatsappNumber: string, message: string): strin
 export function buildContactIntentWhatsAppUrl(
   whatsappNumber: string,
   intent: ContactIntent,
+  language: LanguageCode,
 ): string {
-  return buildWhatsAppUrl(whatsappNumber, buildWhatsAppMessage(intent));
+  return buildWhatsAppUrl(whatsappNumber, buildWhatsAppMessage(intent, language));
 }
 
 export function buildContextualWhatsAppUrl(
   whatsappNumber: string,
   interest: ContactInterest,
+  language: LanguageCode,
 ): string {
-  return buildWhatsAppUrl(whatsappNumber, buildContextualWhatsAppMessage(interest));
+  return buildWhatsAppUrl(whatsappNumber, buildContextualWhatsAppMessage(interest, language));
 }

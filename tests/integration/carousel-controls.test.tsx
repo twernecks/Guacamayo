@@ -14,6 +14,7 @@ describe("CarouselControls", () => {
         onNext={vi.fn()}
         previousLabel="Item anterior"
         nextLabel="Próximo item"
+        positionLabel={(current, total) => `${current} de ${total}`}
       >
         <p>Conteúdo do item 2</p>
       </CarouselControls>,
@@ -34,6 +35,7 @@ describe("CarouselControls", () => {
         onNext={vi.fn()}
         previousLabel="Item anterior"
         nextLabel="Próximo item"
+        positionLabel={(current, total) => `${current} de ${total}`}
       >
         <p>Conteúdo</p>
       </CarouselControls>,
@@ -54,6 +56,7 @@ describe("CarouselControls", () => {
         onNext={onNext}
         previousLabel="Item anterior"
         nextLabel="Próximo item"
+        positionLabel={(current, total) => `${current} de ${total}`}
       >
         <p>Conteúdo</p>
       </CarouselControls>,
@@ -75,6 +78,7 @@ describe("CarouselControls", () => {
         onNext={vi.fn()}
         previousLabel="Item anterior"
         nextLabel="Próximo item"
+        positionLabel={(current, total) => `${current} de ${total}`}
       >
         <p>Conteúdo único</p>
       </CarouselControls>,
@@ -92,6 +96,7 @@ describe("CarouselControls", () => {
         onNext={vi.fn()}
         previousLabel="Item anterior"
         nextLabel="Próximo item"
+        positionLabel={(current, total) => `${current} de ${total}`}
       >
         <p>Sem conteúdo</p>
       </CarouselControls>,
@@ -109,6 +114,7 @@ describe("CarouselControls", () => {
         onNext={vi.fn()}
         previousLabel="Item anterior"
         nextLabel="Próximo item"
+        positionLabel={(current, total) => `${current} de ${total}`}
       >
         <p>Conteúdo do item 2</p>
       </CarouselControls>,

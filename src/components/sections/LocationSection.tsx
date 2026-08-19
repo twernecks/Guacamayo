@@ -5,6 +5,7 @@ import type { Location } from "@/domain/content";
 import { Heading } from "@/components/ui/Heading";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { useLanguage } from "@/i18n/LanguageContext";
 import styles from "./LocationSection.module.css";
 
 type LocationSectionProps = {
@@ -13,37 +14,50 @@ type LocationSectionProps = {
 
 export function LocationSection({ location }: LocationSectionProps) {
   const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const { t } = useLanguage();
   const canLoadMap = Boolean(location.mapEmbedUrl);
 
   return (
     <section id="localizacao" aria-labelledby="location-heading" className={styles.section}>
       <Container>
         <Heading as="h2" size="lg" id="location-heading">
-          Localização
+          {t.location.heading}
         </Heading>
         <p className={styles.address}>{location.address}</p>
 
         {isMapLoaded && canLoadMap ? (
-          <iframe
-            title="Mapa da localização da pousada"
-            src={location.mapEmbedUrl}
-            className={styles.map}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+          <div className={styles.embeds}>
+            <iframe
+              title={t.location.mapTitle}
+              src={location.mapEmbedUrl}
+              className={styles.map}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+
+            <div className={styles.streetView}>
+              {location.streetViewEmbedUrl ? (
+                <iframe
+                  title={t.location.streetViewTitle}
+                  src={location.streetViewEmbedUrl}
+                  className={styles.map}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              ) : null}
+              <p className={styles.streetViewNotice}>{t.location.streetViewUnavailableNotice}</p>
+            </div>
+          </div>
         ) : (
           <div className={styles.mapPlaceholder}>
-            <p className={styles.privacyNotice}>
-              O mapa interativo é fornecido por um serviço externo e só é carregado após sua
-              autorização.
-            </p>
+            <p className={styles.privacyNotice}>{t.location.privacyNotice}</p>
 
             {canLoadMap ? (
               <Button type="button" variant="secondary" onClick={() => setIsMapLoaded(true)}>
-                Carregar mapa
+                {t.location.loadMapButton}
               </Button>
             ) : (
-              <p className={styles.mapUnavailable}>O mapa interativo estará disponível em breve.</p>
+              <p className={styles.mapUnavailable}>{t.location.mapUnavailable}</p>
             )}
 
             {location.fallbackMapUrl ? (
@@ -53,7 +67,7 @@ export function LocationSection({ location }: LocationSectionProps) {
                 rel="noopener noreferrer"
                 className={styles.fallbackLink}
               >
-                Abrir localização em outro serviço de mapas
+                {t.location.openInGoogleMapsLink}
               </a>
             ) : null}
           </div>

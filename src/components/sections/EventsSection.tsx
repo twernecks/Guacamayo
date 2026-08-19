@@ -1,7 +1,10 @@
+"use client";
+
 import type { ContactChannels, EventSpace } from "@/domain/content";
 import { Heading } from "@/components/ui/Heading";
 import { Container } from "@/components/ui/Container";
 import { WhatsAppContact } from "@/components/contact/WhatsAppContact";
+import { useLanguage } from "@/i18n/LanguageContext";
 import { MediaGallery } from "./MediaGallery";
 import styles from "./EventsSection.module.css";
 
@@ -11,6 +14,8 @@ type EventsSectionProps = {
 };
 
 export function EventsSection({ events, contact }: EventsSectionProps) {
+  const { t, localize } = useLanguage();
+
   if (events.length === 0) {
     return null;
   }
@@ -19,30 +24,31 @@ export function EventsSection({ events, contact }: EventsSectionProps) {
     <section id="eventos" aria-labelledby="events-heading" className={styles.section}>
       <Container>
         <Heading as="h2" size="lg" id="events-heading">
-          Eventos
+          {t.events.heading}
         </Heading>
 
         <ul className={styles.grid}>
           {events.map((event) => {
             const headingId = `event-${event.id}-heading`;
+            const name = localize(event.name);
 
             return (
               <li key={event.id} className={styles.card} aria-labelledby={headingId}>
                 <MediaGallery
                   images={event.images}
-                  emptyLabel="Fotos do espaço de eventos em breve"
-                  ariaLabel={`Fotos de ${event.name}`}
+                  emptyLabel={t.events.galleryEmptyLabel}
+                  ariaLabel={t.mediaGallery.photosAriaLabel(name)}
                   sizes="(min-width: 40rem) 50vw, 100vw"
                 />
                 <div className={styles.cardBody}>
                   <Heading as="h3" size="sm" id={headingId}>
-                    {event.name}
+                    {name}
                   </Heading>
-                  <p>{event.purpose}</p>
+                  <p>{localize(event.purpose)}</p>
                   <WhatsAppContact
                     contact={contact}
                     interest="event"
-                    label="Falar sobre este evento"
+                    label={t.events.whatsappCta}
                     variant="primary"
                   />
                 </div>

@@ -6,6 +6,7 @@ import { Heading } from "@/components/ui/Heading";
 import { Container } from "@/components/ui/Container";
 import { CarouselControls } from "@/components/ui/CarouselControls";
 import { interestLabel } from "@/lib/whatsapp";
+import { useLanguage } from "@/i18n/LanguageContext";
 import styles from "./TestimonialsSection.module.css";
 
 type TestimonialsSectionProps = {
@@ -16,6 +17,7 @@ export function TestimonialsSection({ testimonials }: TestimonialsSectionProps) 
   const [activeIndex, setActiveIndex] = useState(0);
   const cardRefs = useRef<Array<HTMLLIElement | null>>([]);
   const total = testimonials.length;
+  const { language, t, localize } = useLanguage();
 
   // Tracks which card is centered in view as the visitor swipes, so the
   // position indicator ("N de M") stays in sync with free-form scrolling,
@@ -74,26 +76,28 @@ export function TestimonialsSection({ testimonials }: TestimonialsSectionProps) 
     <section id="relatos" aria-labelledby="testimonials-heading" className={styles.section}>
       <Container>
         <Heading as="h2" size="lg" id="testimonials-heading">
-          Relatos
+          {t.testimonials.heading}
         </Heading>
 
         {total === 0 ? (
-          <p className={styles.empty}>
-            Ainda não há relatos aprovados para exibir. Em breve, compartilharemos experiências de
-            hóspedes e convidados.
-          </p>
+          <p className={styles.empty}>{t.testimonials.empty}</p>
         ) : (
           <CarouselControls
             activeIndex={activeIndex}
             total={total}
             onPrevious={goPrevious}
             onNext={goNext}
-            previousLabel="Relato anterior"
-            nextLabel="Próximo relato"
+            previousLabel={t.testimonials.previousLabel}
+            nextLabel={t.testimonials.nextLabel}
+            positionLabel={t.testimonials.positionIndicator}
             rowClassName={styles.carouselRow}
             positionClassName={styles.position}
           >
-            <ul className={styles.grid} tabIndex={total > 1 ? 0 : -1} aria-label="Lista de relatos">
+            <ul
+              className={styles.grid}
+              tabIndex={total > 1 ? 0 : -1}
+              aria-label={t.testimonials.listAriaLabel}
+            >
               {testimonials.map((testimonial, index) => (
                 <li
                   key={testimonial.id}
@@ -102,11 +106,13 @@ export function TestimonialsSection({ testimonials }: TestimonialsSectionProps) 
                   }}
                   className={styles.card}
                 >
-                  <blockquote className={styles.quote}>&ldquo;{testimonial.quote}&rdquo;</blockquote>
+                  <blockquote className={styles.quote}>
+                    &ldquo;{localize(testimonial.quote)}&rdquo;
+                  </blockquote>
                   <p className={styles.attribution}>
                     {testimonial.attribution} ·{" "}
                     <span className={styles.experience}>
-                      {interestLabel(testimonial.experienceType)}
+                      {interestLabel(testimonial.experienceType, language)}
                     </span>
                   </p>
                 </li>

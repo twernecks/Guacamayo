@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { render, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { EventsSection } from "@/components/sections/EventsSection";
 import type { ContactChannels, EventSpace } from "@/domain/content";
+import { loc, renderWithLanguage } from "../test-utils";
 
 const CONTACT: ContactChannels = {
   whatsappNumber: "+5511999999999",
@@ -11,8 +12,8 @@ const CONTACT: ContactChannels = {
 
 const EVENT: EventSpace = {
   id: "eventos",
-  name: "Espaço para Eventos",
-  purpose: "Espaço versátil para aniversários e confraternizações.",
+  name: loc("Espaço para Eventos"),
+  purpose: loc("Espaço versátil para aniversários e confraternizações."),
   images: [],
   contactContext: "event",
   isFeatured: false,
@@ -26,13 +27,13 @@ const EVENT_WITH_PHOTOS: EventSpace = {
   images: [
     {
       src: "/images/pousada/eventos/fixture-1.jpg",
-      alt: "Salão de eventos",
+      alt: loc("Salão de eventos"),
       width: 800,
       height: 600,
     },
     {
       src: "/images/pousada/eventos/fixture-2.jpg",
-      alt: "Área externa de eventos",
+      alt: loc("Área externa de eventos"),
       width: 800,
       height: 600,
     },
@@ -41,14 +42,14 @@ const EVENT_WITH_PHOTOS: EventSpace = {
 
 describe("EventsSection", () => {
   it("renders the event space name and purpose", () => {
-    render(<EventsSection events={[EVENT]} contact={CONTACT} />);
+    renderWithLanguage(<EventsSection events={[EVENT]} contact={CONTACT} />);
 
-    expect(screen.getByRole("heading", { name: EVENT.name })).toBeInTheDocument();
-    expect(screen.getByText(EVENT.purpose)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: EVENT.name.pt })).toBeInTheDocument();
+    expect(screen.getByText(EVENT.purpose.pt)).toBeInTheDocument();
   });
 
   it("shows a WhatsApp CTA contextualized for the event interest, distinct from wedding copy", () => {
-    render(<EventsSection events={[EVENT]} contact={CONTACT} />);
+    renderWithLanguage(<EventsSection events={[EVENT]} contact={CONTACT} />);
 
     const link = screen.getByRole("link", { name: /evento/i });
     const decodedHref = decodeURIComponent(link.getAttribute("href") ?? "");
@@ -60,20 +61,20 @@ describe("EventsSection", () => {
   });
 
   it("shows a gallery fallback when the event space has no approved photo yet", () => {
-    render(<EventsSection events={[EVENT]} contact={CONTACT} />);
+    renderWithLanguage(<EventsSection events={[EVENT]} contact={CONTACT} />);
 
     expect(screen.getByText(/fotos.*em breve/i)).toBeInTheDocument();
   });
 
   it("renders nothing when there are no non-wedding event spaces to show", () => {
-    const { container } = render(<EventsSection events={[]} contact={CONTACT} />);
+    const { container } = renderWithLanguage(<EventsSection events={[]} contact={CONTACT} />);
 
     expect(container).toBeEmptyDOMElement();
   });
 
   it("opens the same focused photo view as Quartos when an event photo is approved (US2 parity)", async () => {
     const user = userEvent.setup();
-    render(<EventsSection events={[EVENT_WITH_PHOTOS]} contact={CONTACT} />);
+    renderWithLanguage(<EventsSection events={[EVENT_WITH_PHOTOS]} contact={CONTACT} />);
 
     await user.click(screen.getByRole("button", { name: /ver 2 fotos/i }));
 

@@ -1,6 +1,8 @@
 import type { ContactChannels } from "@/domain/content";
 import type { ContactInterest } from "@/domain/contact-intent";
 import { buildContextualWhatsAppUrl } from "@/lib/whatsapp";
+import { useLanguage } from "@/i18n/LanguageContext";
+import type { Messages } from "@/i18n/messages";
 import { Button } from "@/components/ui/Button";
 import styles from "./WhatsAppContact.module.css";
 
@@ -11,23 +13,31 @@ type WhatsAppContactProps = {
   variant?: "primary" | "accent";
 };
 
-function FallbackContact({ phone, email }: { phone?: string; email?: string }) {
+function FallbackContact({
+  phone,
+  email,
+  t,
+}: {
+  phone?: string;
+  email?: string;
+  t: Messages["whatsappContact"];
+}) {
   if (!phone && !email) {
     return null;
   }
 
   return (
     <p className={styles.fallback}>
-      Prefere outro canal?{" "}
+      {t.fallbackPrefix}{" "}
       {phone ? (
         <>
-          Ligue em <a href={`tel:${phone}`}>{phone}</a>
+          {t.fallbackCallPrefix} <a href={`tel:${phone}`}>{phone}</a>
         </>
       ) : null}
-      {phone && email ? " ou " : null}
+      {phone && email ? ` ${t.fallbackConnector} ` : null}
       {email ? (
         <>
-          envie um e-mail para <a href={`mailto:${email}`}>{email}</a>
+          {t.fallbackEmailPrefix} <a href={`mailto:${email}`}>{email}</a>
         </>
       ) : null}
       .
@@ -38,17 +48,18 @@ function FallbackContact({ phone, email }: { phone?: string; email?: string }) {
 export function WhatsAppContact({
   contact,
   interest,
-  label = "Falar no WhatsApp",
+  label,
   variant = "accent",
 }: WhatsAppContactProps) {
-  const whatsappUrl = buildContextualWhatsAppUrl(contact.whatsappNumber, interest);
+  const { language, t } = useLanguage();
+  const whatsappUrl = buildContextualWhatsAppUrl(contact.whatsappNumber, interest, language);
 
   return (
     <div className={styles.wrapper}>
       <Button href={whatsappUrl} variant={variant} target="_blank" rel="noopener noreferrer">
-        {label}
+        {label ?? t.whatsappContact.defaultLabel}
       </Button>
-      <FallbackContact phone={contact.phone} email={contact.email} />
+      <FallbackContact phone={contact.phone} email={contact.email} t={t.whatsappContact} />
     </div>
   );
 }

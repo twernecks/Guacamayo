@@ -1,0 +1,33 @@
+/*
+ * A static button group (no dropdown/menu to open) — FR-013's requirement to
+ * respect prefers-reduced-motion for any opening transition is satisfied by
+ * having no transition at all, the simplest way to meet it.
+ */
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex: 0 0 auto;
+}
+
+.option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-foreground);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.option[aria-pressed="true"] {
+  background: var(--color-foreground);
+  color: var(--color-background);
+  border-color: var(--color-foreground);
+}

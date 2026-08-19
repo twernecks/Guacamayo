@@ -3,22 +3,11 @@
 import { useEffect, useState } from "react";
 import type { ContactChannels } from "@/domain/content";
 import { buildContextualWhatsAppUrl } from "@/lib/whatsapp";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { LanguageSelector } from "./LanguageSelector";
 import { Button } from "./Button";
 import { Container } from "./Container";
 import styles from "./SiteHeader.module.css";
-
-type NavItem = {
-  href: string;
-  label: string;
-};
-
-const NAV_ITEMS: NavItem[] = [
-  { href: "#quartos", label: "Quartos" },
-  { href: "#casamentos", label: "Casamentos" },
-  { href: "#eventos", label: "Eventos" },
-  { href: "#relatos", label: "Relatos" },
-  { href: "#localizacao", label: "Localização" },
-];
 
 const DESKTOP_MEDIA_QUERY = "(min-width: 60rem)";
 
@@ -28,7 +17,16 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ contact }: SiteHeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const whatsappUrl = buildContextualWhatsAppUrl(contact.whatsappNumber, "stay");
+  const { language, t } = useLanguage();
+  const whatsappUrl = buildContextualWhatsAppUrl(contact.whatsappNumber, "stay", language);
+
+  const navItems = [
+    { href: "#quartos", label: t.nav.rooms },
+    { href: "#casamentos", label: t.nav.weddings },
+    { href: "#eventos", label: t.nav.events },
+    { href: "#relatos", label: t.nav.testimonials },
+    { href: "#localizacao", label: t.nav.location },
+  ];
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(DESKTOP_MEDIA_QUERY);
@@ -60,22 +58,22 @@ export function SiteHeader({ contact }: SiteHeaderProps) {
   return (
     <>
       <a href="#conteudo-principal" className={styles.skipLink}>
-        Pular para o conteúdo principal
+        {t.skipLink}
       </a>
       <header className={styles.header}>
         <Container className={styles.inner}>
           <a href="#inicio" className={styles.brand}>
-            Pousada
+            {t.brand}
           </a>
 
           <nav
             id="primary-navigation"
-            aria-label="Navegação principal"
+            aria-label={t.nav.ariaLabel}
             className={styles.nav}
             data-open={isOpen}
           >
             <ul className={styles.navList}>
-              {NAV_ITEMS.map((item) => (
+              {navItems.map((item) => (
                 <li key={item.href}>
                   <a href={item.href} onClick={() => setIsOpen(false)}>
                     {item.label}
@@ -86,6 +84,8 @@ export function SiteHeader({ contact }: SiteHeaderProps) {
           </nav>
 
           <div className={styles.actions}>
+            <LanguageSelector />
+
             <Button
               href={whatsappUrl}
               variant="primary"
@@ -93,7 +93,7 @@ export function SiteHeader({ contact }: SiteHeaderProps) {
               rel="noopener noreferrer"
               className={styles.whatsappAction}
             >
-              Falar no WhatsApp
+              {t.header.whatsappCta}
             </Button>
 
             <button
@@ -104,7 +104,7 @@ export function SiteHeader({ contact }: SiteHeaderProps) {
               onClick={() => setIsOpen((open) => !open)}
             >
               <span className="visually-hidden">
-                {isOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+                {isOpen ? t.menuToggle.close : t.menuToggle.open}
               </span>
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
                 {isOpen ? (

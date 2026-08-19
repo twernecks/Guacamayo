@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import type { Media } from "@/domain/content";
+import { useLanguage } from "@/i18n/LanguageContext";
 import { MediaGalleryLightbox } from "./MediaGalleryLightbox";
 import styles from "./MediaGallery.module.css";
 
@@ -26,6 +27,7 @@ export function MediaGallery({
   const [coverFailed, setCoverFailed] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const { t, localize } = useLanguage();
 
   const coverImage = images[0];
 
@@ -54,7 +56,7 @@ export function MediaGallery({
       >
         <Image
           src={coverImage.src}
-          alt={coverImage.alt}
+          alt={localize(coverImage.alt)}
           width={coverImage.width}
           height={coverImage.height}
           sizes={sizes}
@@ -68,7 +70,9 @@ export function MediaGallery({
           </span>
         ) : null}
         <span className="visually-hidden">
-          {photoCount > 1 ? `Ver ${photoCount} fotos de ${ariaLabel}` : `Ver foto de ${ariaLabel}`}
+          {photoCount > 1
+            ? t.mediaGallery.viewPhotosMultiple(photoCount, ariaLabel)
+            : t.mediaGallery.viewPhotosSingle(ariaLabel)}
         </span>
       </button>
 

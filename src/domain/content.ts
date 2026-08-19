@@ -1,26 +1,30 @@
+import type { LanguageCode } from "@/i18n/languages";
+
 export type ContactContext = "stay" | "event" | "wedding";
+
+export type LocalizedText = Record<LanguageCode, string>;
 
 export type Media = {
   src: string;
-  alt: string;
+  alt: LocalizedText;
   width: number;
   height: number;
-  caption?: string;
+  caption?: LocalizedText;
 };
 
 export type Room = {
   id: string;
-  name: string;
-  summary: string;
-  amenities: string[];
+  name: LocalizedText;
+  summary: LocalizedText;
+  amenities: LocalizedText[];
   images: Media[];
   contactContext: "stay";
 };
 
 export type EventSpace = {
   id: string;
-  name: string;
-  purpose: string;
+  name: LocalizedText;
+  purpose: LocalizedText;
   images: Media[];
   contactContext: "event" | "wedding";
   isFeatured: boolean;
@@ -30,7 +34,7 @@ export type ExperienceType = "stay" | "event" | "wedding";
 
 export type Testimonial = {
   id: string;
-  quote: string;
+  quote: LocalizedText;
   attribution: string;
   experienceType: ExperienceType;
   approvedAt: string;
@@ -43,9 +47,16 @@ export type ContactChannels = {
   address: string;
 };
 
+export type GeoCoordinates = {
+  lat: number;
+  lng: number;
+};
+
 export type Location = {
   address: string;
+  coordinates: GeoCoordinates;
   mapEmbedUrl: string;
+  streetViewEmbedUrl?: string;
   fallbackMapUrl: string;
 };
 

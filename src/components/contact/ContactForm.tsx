@@ -12,6 +12,7 @@ import {
   type ContactIntentFieldErrors,
 } from "@/domain/contact-intent";
 import { buildContactIntentWhatsAppUrl, interestLabel } from "@/lib/whatsapp";
+import { useLanguage } from "@/i18n/LanguageContext";
 import { Button } from "@/components/ui/Button";
 import styles from "./ContactForm.module.css";
 
@@ -30,9 +31,11 @@ type FieldRefs = {
 export function ContactForm({
   whatsappNumber,
   defaultInterest = "stay",
-  submitLabel = "Enviar pelo WhatsApp",
+  submitLabel,
 }: ContactFormProps) {
   const formId = useId();
+  const { language, t } = useLanguage();
+  const resolvedSubmitLabel = submitLabel ?? t.contactForm.submitLabel;
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [interest, setInterest] = useState<ContactInterest>(defaultInterest);
@@ -54,7 +57,7 @@ export function ContactForm({
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const fieldErrors = validateContactIntent({ name, phone, interest, message });
+    const fieldErrors = validateContactIntent({ name, phone, interest, message }, language);
     setErrors(fieldErrors);
 
     if (!isContactIntentValid(fieldErrors)) {
@@ -66,14 +69,14 @@ export function ContactForm({
     }
 
     const intent = toContactIntent({ name, phone, interest, message });
-    const whatsappUrl = buildContactIntentWhatsAppUrl(whatsappNumber, intent);
+    const whatsappUrl = buildContactIntentWhatsAppUrl(whatsappNumber, intent, language);
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   }
 
   return (
     <form className={styles.form} noValidate onSubmit={handleSubmit}>
       <div className={styles.field}>
-        <label htmlFor={`${formId}-name`}>Nome</label>
+        <label htmlFor={`${formId}-name`}>{t.contactForm.nameLabel}</label>
         <input
           id={`${formId}-name`}
           ref={nameRef}
@@ -92,7 +95,7 @@ export function ContactForm({
       </div>
 
       <div className={styles.field}>
-        <label htmlFor={`${formId}-phone`}>Telefone</label>
+        <label htmlFor={`${formId}-phone`}>{t.contactForm.phoneLabel}</label>
         <input
           id={`${formId}-phone`}
           ref={phoneRef}
@@ -111,7 +114,7 @@ export function ContactForm({
       </div>
 
       <div className={styles.field}>
-        <label htmlFor={`${formId}-interest`}>Tipo de evento/serviço</label>
+        <label htmlFor={`${formId}-interest`}>{t.contactForm.interestLabel}</label>
         <select
           id={`${formId}-interest`}
           ref={interestRef}
@@ -122,7 +125,7 @@ export function ContactForm({
         >
           {CONTACT_INTERESTS.map((option) => (
             <option key={option} value={option}>
-              {interestLabel(option)}
+              {interestLabel(option, language)}
             </option>
           ))}
         </select>
@@ -134,7 +137,7 @@ export function ContactForm({
       </div>
 
       <div className={styles.field}>
-        <label htmlFor={`${formId}-message`}>Mensagem (opcional)</label>
+        <label htmlFor={`${formId}-message`}>{t.contactForm.messageLabel}</label>
         <textarea
           id={`${formId}-message`}
           ref={messageRef}
@@ -152,7 +155,7 @@ export function ContactForm({
       </div>
 
       <Button type="submit" variant="accent">
-        {submitLabel}
+        {resolvedSubmitLabel}
       </Button>
     </form>
   );

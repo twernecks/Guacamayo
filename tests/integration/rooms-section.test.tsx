@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { render, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { RoomsSection } from "@/components/sections/RoomsSection";
 import type { ContactChannels, Room } from "@/domain/content";
+import { loc, renderWithLanguage } from "../test-utils";
 
 const CONTACT: ContactChannels = {
   whatsappNumber: "+5511999999999",
@@ -12,25 +13,30 @@ const CONTACT: ContactChannels = {
 
 const ROOM_WITH_IMAGE: Room = {
   id: "quarto-jardim",
-  name: "Quarto Jardim",
-  summary: "Vista para o jardim com varanda privativa.",
-  amenities: ["Wi-Fi", "Ar-condicionado"],
+  name: loc("Quarto Jardim"),
+  summary: loc("Vista para o jardim com varanda privativa."),
+  amenities: [loc("Wi-Fi"), loc("Ar-condicionado")],
   images: [
-    { src: "/images/pousada/quarto-jardim.avif", alt: "Quarto Jardim", width: 800, height: 600 },
+    { src: "/images/pousada/quarto-jardim.avif", alt: loc("Quarto Jardim"), width: 800, height: 600 },
   ],
   contactContext: "stay",
 };
 
 const ROOM_WITH_MULTIPLE_IMAGES: Room = {
   id: "quarto-jardim",
-  name: "Quarto Jardim",
-  summary: "Vista para o jardim com varanda privativa.",
-  amenities: ["Wi-Fi", "Ar-condicionado"],
+  name: loc("Quarto Jardim"),
+  summary: loc("Vista para o jardim com varanda privativa."),
+  amenities: [loc("Wi-Fi"), loc("Ar-condicionado")],
   images: [
-    { src: "/images/pousada/quarto-jardim-1.avif", alt: "Quarto Jardim", width: 800, height: 600 },
+    {
+      src: "/images/pousada/quarto-jardim-1.avif",
+      alt: loc("Quarto Jardim"),
+      width: 800,
+      height: 600,
+    },
     {
       src: "/images/pousada/quarto-jardim-2.avif",
-      alt: "Quarto Jardim, banheiro",
+      alt: loc("Quarto Jardim, banheiro"),
       width: 800,
       height: 600,
     },
@@ -40,8 +46,8 @@ const ROOM_WITH_MULTIPLE_IMAGES: Room = {
 
 const ROOM_WITHOUT_IMAGE: Room = {
   id: "quarto-varanda",
-  name: "Quarto Varanda",
-  summary: "Quarto com varanda privativa.",
+  name: loc("Quarto Varanda"),
+  summary: loc("Quarto com varanda privativa."),
   amenities: [],
   images: [],
   contactContext: "stay",
@@ -49,7 +55,7 @@ const ROOM_WITHOUT_IMAGE: Room = {
 
 describe("HeroSection", () => {
   it("renders a heading and a WhatsApp contact action for the stay interest", () => {
-    render(<HeroSection contact={CONTACT} />);
+    renderWithLanguage(<HeroSection contact={CONTACT} />);
 
     expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
 
@@ -60,23 +66,23 @@ describe("HeroSection", () => {
 
 describe("RoomsSection", () => {
   it("renders each room's name, summary and amenities", () => {
-    render(<RoomsSection rooms={[ROOM_WITH_IMAGE]} />);
+    renderWithLanguage(<RoomsSection rooms={[ROOM_WITH_IMAGE]} />);
 
     expect(screen.getByRole("heading", { name: "Quarto Jardim" })).toBeInTheDocument();
-    expect(screen.getByText(ROOM_WITH_IMAGE.summary)).toBeInTheDocument();
+    expect(screen.getByText(ROOM_WITH_IMAGE.summary.pt)).toBeInTheDocument();
     expect(screen.getByText("Wi-Fi")).toBeInTheDocument();
     expect(screen.getByText("Ar-condicionado")).toBeInTheDocument();
   });
 
   it("renders the room's cover photo, clickable, with contextual alt text when an image is approved", () => {
-    render(<RoomsSection rooms={[ROOM_WITH_IMAGE]} />);
+    renderWithLanguage(<RoomsSection rooms={[ROOM_WITH_IMAGE]} />);
 
     const trigger = screen.getByRole("button", { name: /ver foto de fotos de quarto jardim/i });
     expect(within(trigger).getByAltText("Quarto Jardim")).toBeInTheDocument();
   });
 
   it("shows a photo-count indicator only when the room has more than one photo", () => {
-    const { rerender } = render(<RoomsSection rooms={[ROOM_WITH_IMAGE]} />);
+    const { rerender } = renderWithLanguage(<RoomsSection rooms={[ROOM_WITH_IMAGE]} />);
     expect(screen.queryByText(/^\+\d/)).not.toBeInTheDocument();
 
     rerender(<RoomsSection rooms={[ROOM_WITH_MULTIPLE_IMAGES]} />);
@@ -85,7 +91,7 @@ describe("RoomsSection", () => {
 
   it("opens the focused photo view for that room when its cover photo is activated", async () => {
     const user = userEvent.setup();
-    render(<RoomsSection rooms={[ROOM_WITH_MULTIPLE_IMAGES]} />);
+    renderWithLanguage(<RoomsSection rooms={[ROOM_WITH_MULTIPLE_IMAGES]} />);
 
     await user.click(
       screen.getByRole("button", { name: /ver 2 fotos de fotos de quarto jardim/i }),
@@ -97,13 +103,13 @@ describe("RoomsSection", () => {
   });
 
   it("shows an understandable fallback when a room has no approved photo yet", () => {
-    render(<RoomsSection rooms={[ROOM_WITHOUT_IMAGE]} />);
+    renderWithLanguage(<RoomsSection rooms={[ROOM_WITHOUT_IMAGE]} />);
 
     expect(screen.getByText(/foto.*em breve/i)).toBeInTheDocument();
   });
 
   it("shows an editorial empty state when there are no rooms to display", () => {
-    render(<RoomsSection rooms={[]} />);
+    renderWithLanguage(<RoomsSection rooms={[]} />);
 
     expect(screen.getByRole("heading", { name: /quartos/i })).toBeInTheDocument();
     expect(screen.getByText(/em breve/i)).toBeInTheDocument();

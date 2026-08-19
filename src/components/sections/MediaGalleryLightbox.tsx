@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState, type MouseEvent } from "react";
 import Image from "next/image";
 import type { Media } from "@/domain/content";
 import { CarouselControls } from "@/components/ui/CarouselControls";
+import { useLanguage } from "@/i18n/LanguageContext";
 import styles from "./MediaGalleryLightbox.module.css";
 
 type MediaGalleryLightboxProps = {
@@ -42,6 +43,7 @@ export function MediaGalleryLightbox({
   const [wasOpen, setWasOpen] = useState(isOpen);
   const titleId = useId();
   const total = images.length;
+  const { t, localize } = useLanguage();
 
   // Reset to the clicked photo each time the lightbox transitions to open.
   // Adjusted during render (React's recommended pattern for state derived
@@ -156,7 +158,7 @@ export function MediaGalleryLightbox({
             className={styles.closeButton}
             onClick={() => dialogRef.current?.close()}
           >
-            <span className="visually-hidden">Fechar</span>
+            <span className="visually-hidden">{t.lightbox.close}</span>
             <CloseIcon />
           </button>
         </div>
@@ -166,20 +168,21 @@ export function MediaGalleryLightbox({
           total={total}
           onPrevious={goPrevious}
           onNext={goNext}
-          previousLabel="Foto anterior"
-          nextLabel="Próxima foto"
+          previousLabel={t.lightbox.previousPhoto}
+          nextLabel={t.lightbox.nextPhoto}
+          positionLabel={t.lightbox.positionIndicator}
           rowClassName={styles.body}
           positionClassName={styles.position}
         >
           <figure className={styles.figure}>
             {imageFailed ? (
               <div className={styles.imageFallback}>
-                <p>Não foi possível carregar esta foto.</p>
+                <p>{t.lightbox.loadFailed}</p>
               </div>
             ) : (
               <Image
                 src={image.src}
-                alt={image.alt}
+                alt={localize(image.alt)}
                 width={image.width}
                 height={image.height}
                 className={styles.image}
@@ -193,7 +196,7 @@ export function MediaGalleryLightbox({
               />
             )}
             {image.caption ? (
-              <figcaption className={styles.caption}>{image.caption}</figcaption>
+              <figcaption className={styles.caption}>{localize(image.caption)}</figcaption>
             ) : null}
           </figure>
         </CarouselControls>

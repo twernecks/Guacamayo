@@ -22,50 +22,61 @@ const VALID_INPUT = {
 
 describe("validateContactIntent", () => {
   it("returns no errors for valid input", () => {
-    const errors = validateContactIntent(VALID_INPUT);
+    const errors = validateContactIntent(VALID_INPUT, "pt");
 
     expect(errors).toEqual({});
     expect(isContactIntentValid(errors)).toBe(true);
   });
 
   it("requires a name between 2 and 80 characters", () => {
-    expect(validateContactIntent({ ...VALID_INPUT, name: "A" }).name).toBeDefined();
-    expect(validateContactIntent({ ...VALID_INPUT, name: "a".repeat(81) }).name).toBeDefined();
+    expect(validateContactIntent({ ...VALID_INPUT, name: "A" }, "pt").name).toBeDefined();
+    expect(
+      validateContactIntent({ ...VALID_INPUT, name: "a".repeat(81) }, "pt").name,
+    ).toBeDefined();
   });
 
   it("rejects a phone without enough digits", () => {
-    const errors = validateContactIntent({ ...VALID_INPUT, phone: "123" });
+    const errors = validateContactIntent({ ...VALID_INPUT, phone: "123" }, "pt");
 
     expect(errors.phone).toBeDefined();
   });
 
   it("rejects an interest outside stay, event or wedding", () => {
-    const errors = validateContactIntent({ ...VALID_INPUT, interest: "invalid" });
+    const errors = validateContactIntent({ ...VALID_INPUT, interest: "invalid" }, "pt");
 
     expect(errors.interest).toBeDefined();
   });
 
   it("rejects a message longer than 1000 characters", () => {
-    const errors = validateContactIntent({ ...VALID_INPUT, message: "a".repeat(1001) });
+    const errors = validateContactIntent({ ...VALID_INPUT, message: "a".repeat(1001) }, "pt");
 
     expect(errors.message).toBeDefined();
   });
 
   it("allows an empty optional message", () => {
-    const errors = validateContactIntent({ ...VALID_INPUT, message: "" });
+    const errors = validateContactIntent({ ...VALID_INPUT, message: "" }, "pt");
 
     expect(errors.message).toBeUndefined();
+  });
+
+  it("returns error messages in the requested language", () => {
+    const errors = validateContactIntent({ ...VALID_INPUT, name: "A" }, "en");
+
+    expect(errors.name).toBe("Enter a name with 2 to 80 characters.");
   });
 });
 
 describe("getFirstInvalidField", () => {
   it("returns fields in name, phone, interest, message order", () => {
-    const errors = validateContactIntent({
-      name: "",
-      phone: "",
-      interest: "invalid",
-      message: "",
-    });
+    const errors = validateContactIntent(
+      {
+        name: "",
+        phone: "",
+        interest: "invalid",
+        message: "",
+      },
+      "pt",
+    );
 
     expect(getFirstInvalidField(errors)).toBe("name");
   });
@@ -98,25 +109,31 @@ describe("toContactIntent", () => {
 
 describe("buildWhatsAppMessage", () => {
   it("includes name, interest label, phone and message", () => {
-    const message = buildWhatsAppMessage({
-      name: "Maria Silva",
-      phone: "11912345678",
-      interest: "wedding",
-      message: "Gostaria de um orçamento.",
-    });
+    const message = buildWhatsAppMessage(
+      {
+        name: "Maria Silva",
+        phone: "11912345678",
+        interest: "wedding",
+        message: "Gostaria de um orçamento.",
+      },
+      "pt",
+    );
 
     expect(message).toContain("Maria Silva");
-    expect(message).toContain(interestLabel("wedding"));
+    expect(message).toContain(interestLabel("wedding", "pt"));
     expect(message).toContain("11912345678");
     expect(message).toContain("Gostaria de um orçamento.");
   });
 
   it("omits the message line when there is no message", () => {
-    const message = buildWhatsAppMessage({
-      name: "Maria Silva",
-      phone: "11912345678",
-      interest: "stay",
-    });
+    const message = buildWhatsAppMessage(
+      {
+        name: "Maria Silva",
+        phone: "11912345678",
+        interest: "stay",
+      },
+      "pt",
+    );
 
     expect(message).not.toContain("Mensagem:");
   });
@@ -132,23 +149,29 @@ describe("buildWhatsAppUrl", () => {
 
 describe("buildContextualWhatsAppUrl", () => {
   it("builds a wa.me link with a message mentioning the interest", () => {
-    const url = buildContextualWhatsAppUrl("+5500000000000", "event");
+    const url = buildContextualWhatsAppUrl("+5500000000000", "event", "pt");
 
     expect(url).toMatch(/^https:\/\/wa\.me\/5500000000000\?text=/);
-    expect(decodeURIComponent(url.split("text=")[1] ?? "")).toContain(interestLabel("event"));
+    expect(decodeURIComponent(url.split("text=")[1] ?? "")).toContain(
+      interestLabel("event", "pt"),
+    );
   });
 });
 
 describe("buildContactIntentWhatsAppUrl", () => {
   it("builds a wa.me link carrying the full contact intent message", () => {
-    const url = buildContactIntentWhatsAppUrl("+5500000000000", {
-      name: "Maria Silva",
-      phone: "11912345678",
-      interest: "wedding",
-    });
+    const url = buildContactIntentWhatsAppUrl(
+      "+5500000000000",
+      {
+        name: "Maria Silva",
+        phone: "11912345678",
+        interest: "wedding",
+      },
+      "pt",
+    );
 
     const decoded = decodeURIComponent(url.split("text=")[1] ?? "");
     expect(decoded).toContain("Maria Silva");
-    expect(decoded).toContain(interestLabel("wedding"));
+    expect(decoded).toContain(interestLabel("wedding", "pt"));
   });
 });

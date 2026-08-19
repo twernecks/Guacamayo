@@ -1,3 +1,6 @@
+import type { LanguageCode } from "@/i18n/languages";
+import { MESSAGES } from "@/i18n/messages";
+
 export type ContactInterest = "stay" | "event" | "wedding";
 
 export type ContactIntent = {
@@ -35,26 +38,30 @@ export function isContactInterest(value: string): value is ContactInterest {
   return (CONTACT_INTERESTS as readonly string[]).includes(value);
 }
 
-export function validateContactIntent(input: ContactIntentInput): ContactIntentFieldErrors {
+export function validateContactIntent(
+  input: ContactIntentInput,
+  language: LanguageCode,
+): ContactIntentFieldErrors {
+  const t = MESSAGES[language].contactForm;
   const errors: ContactIntentFieldErrors = {};
 
   const name = input.name.trim();
   if (name.length < NAME_MIN_LENGTH || name.length > NAME_MAX_LENGTH) {
-    errors.name = `Informe um nome com ${NAME_MIN_LENGTH} a ${NAME_MAX_LENGTH} caracteres.`;
+    errors.name = t.nameError;
   }
 
   const phone = input.phone.trim();
   const phoneDigitCount = phone.replace(/\D/g, "").length;
   if (!PHONE_PATTERN.test(phone) || phoneDigitCount < PHONE_MIN_DIGITS) {
-    errors.phone = "Informe um telefone válido, com DDD.";
+    errors.phone = t.phoneError;
   }
 
   if (!isContactInterest(input.interest)) {
-    errors.interest = "Selecione o tipo de evento ou serviço.";
+    errors.interest = t.interestError;
   }
 
   if (input.message && input.message.length > MESSAGE_MAX_LENGTH) {
-    errors.message = `A mensagem deve ter no máximo ${MESSAGE_MAX_LENGTH} caracteres.`;
+    errors.message = t.messageError(MESSAGE_MAX_LENGTH);
   }
 
   return errors;

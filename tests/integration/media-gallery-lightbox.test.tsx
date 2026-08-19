@@ -1,9 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
-import { render, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 import { MediaGalleryLightbox } from "@/components/sections/MediaGalleryLightbox";
 import type { Media } from "@/domain/content";
+import { loc, renderWithLanguage } from "../test-utils";
 
 const AXE_OPTIONS = {
   rules: {
@@ -12,16 +13,16 @@ const AXE_OPTIONS = {
 };
 
 const IMAGES: Media[] = [
-  { src: "/images/pousada/quartos/foto-1.jpg", alt: "Foto 1 do quarto", width: 800, height: 600 },
-  { src: "/images/pousada/quartos/foto-2.jpg", alt: "Foto 2 do quarto", width: 800, height: 600 },
-  { src: "/images/pousada/quartos/foto-3.jpg", alt: "Foto 3 do quarto", width: 800, height: 600 },
+  { src: "/images/pousada/quartos/foto-1.jpg", alt: loc("Foto 1 do quarto"), width: 800, height: 600 },
+  { src: "/images/pousada/quartos/foto-2.jpg", alt: loc("Foto 2 do quarto"), width: 800, height: 600 },
+  { src: "/images/pousada/quartos/foto-3.jpg", alt: loc("Foto 3 do quarto"), width: 800, height: 600 },
 ];
 
 const SINGLE_IMAGE: Media[] = [IMAGES[0]!];
 
 describe("MediaGalleryLightbox", () => {
   it("shows the photo at initialIndex with the item label as the dialog's accessible name", () => {
-    render(
+    renderWithLanguage(
       <MediaGalleryLightbox
         images={IMAGES}
         itemLabel="Fotos de Quarto Duplo Deluxe com Vista do Mar"
@@ -38,7 +39,7 @@ describe("MediaGalleryLightbox", () => {
   });
 
   it("keeps the title, close button and position indicator simultaneously present (none is hidden to save space, including at the compact mobile size)", () => {
-    render(
+    renderWithLanguage(
       <MediaGalleryLightbox
         images={IMAGES}
         itemLabel="Fotos de Quarto Duplo Deluxe com Vista do Mar"
@@ -59,7 +60,7 @@ describe("MediaGalleryLightbox", () => {
   });
 
   it("shows position indicator only when there is more than one photo", () => {
-    const { rerender } = render(
+    const { rerender } = renderWithLanguage(
       <MediaGalleryLightbox
         images={IMAGES}
         itemLabel="Fotos de teste"
@@ -88,7 +89,7 @@ describe("MediaGalleryLightbox", () => {
 
   it("navigates forward and wraps from the last photo back to the first", async () => {
     const user = userEvent.setup();
-    render(
+    renderWithLanguage(
       <MediaGalleryLightbox
         images={IMAGES}
         itemLabel="Fotos de teste"
@@ -108,7 +109,7 @@ describe("MediaGalleryLightbox", () => {
 
   it("navigates backward and wraps from the first photo to the last", async () => {
     const user = userEvent.setup();
-    render(
+    renderWithLanguage(
       <MediaGalleryLightbox
         images={IMAGES}
         itemLabel="Fotos de teste"
@@ -127,7 +128,7 @@ describe("MediaGalleryLightbox", () => {
   it("calls onClose when the close button is activated", async () => {
     const user = userEvent.setup();
     const onClose = vi.fn();
-    render(
+    renderWithLanguage(
       <MediaGalleryLightbox
         images={IMAGES}
         itemLabel="Fotos de teste"
@@ -145,7 +146,7 @@ describe("MediaGalleryLightbox", () => {
   it("calls onClose when Escape is pressed", async () => {
     const user = userEvent.setup();
     const onClose = vi.fn();
-    render(
+    renderWithLanguage(
       <MediaGalleryLightbox
         images={IMAGES}
         itemLabel="Fotos de teste"
@@ -163,7 +164,7 @@ describe("MediaGalleryLightbox", () => {
   it("calls onClose when the backdrop is clicked but not when the photo itself is clicked", async () => {
     const user = userEvent.setup();
     const onClose = vi.fn();
-    render(
+    renderWithLanguage(
       <MediaGalleryLightbox
         images={IMAGES}
         itemLabel="Fotos de teste"
@@ -182,7 +183,7 @@ describe("MediaGalleryLightbox", () => {
 
   it("shows an understandable fallback when a photo fails to load, without breaking navigation", async () => {
     const user = userEvent.setup();
-    render(
+    renderWithLanguage(
       <MediaGalleryLightbox
         images={IMAGES}
         itemLabel="Fotos de teste"
@@ -202,7 +203,7 @@ describe("MediaGalleryLightbox", () => {
   });
 
   it("has no automatically detectable accessibility violations while open", async () => {
-    const { container } = render(
+    const { container } = renderWithLanguage(
       <MediaGalleryLightbox
         images={IMAGES}
         itemLabel="Fotos de teste"

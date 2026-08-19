@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
+import { LanguageProvider } from "@/i18n/LanguageContext";
 import "./globals.css";
 
 const bodyFont = Inter({
@@ -58,8 +59,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${bodyFont.variable} ${headingFont.variable}`}>
-      <body>{children}</body>
+    <html lang="pt" className={`${bodyFont.variable} ${headingFont.variable}`}>
+      <body>
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
     </html>
   );
 }

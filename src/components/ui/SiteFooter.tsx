@@ -1,5 +1,8 @@
+"use client";
+
 import type { ContactChannels } from "@/domain/content";
 import { buildContextualWhatsAppUrl } from "@/lib/whatsapp";
+import { useLanguage } from "@/i18n/LanguageContext";
 import { Container } from "./Container";
 import styles from "./SiteFooter.module.css";
 
@@ -8,7 +11,8 @@ type SiteFooterProps = {
 };
 
 export function SiteFooter({ contact }: SiteFooterProps) {
-  const whatsappUrl = buildContextualWhatsAppUrl(contact.whatsappNumber, "stay");
+  const { language, t } = useLanguage();
+  const whatsappUrl = buildContextualWhatsAppUrl(contact.whatsappNumber, "stay", language);
   const year = new Date().getFullYear();
 
   return (
@@ -34,7 +38,7 @@ export function SiteFooter({ contact }: SiteFooterProps) {
             ) : null}
           </ul>
         </div>
-        <p className={styles.copyright}>© {year} Pousada. Todos os direitos reservados.</p>
+        <p className={styles.copyright}>{t.footer.copyright(year)}</p>
       </Container>
     </footer>
   );

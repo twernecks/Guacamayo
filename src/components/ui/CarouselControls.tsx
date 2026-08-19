@@ -8,6 +8,7 @@ type CarouselControlsProps = {
   onNext: () => void;
   previousLabel: string;
   nextLabel: string;
+  positionLabel: (current: number, total: number) => string;
   children: ReactNode;
   rowClassName?: string;
   positionClassName?: string;
@@ -25,6 +26,7 @@ export function CarouselControls({
   onNext,
   previousLabel,
   nextLabel,
+  positionLabel,
   children,
   rowClassName,
   positionClassName,
@@ -63,7 +65,7 @@ export function CarouselControls({
 
       {hasMultiple ? (
         <p className={positionClasses} aria-live="polite">
-          {activeIndex + 1} de {total}
+          {positionLabel(activeIndex + 1, total)}
         </p>
       ) : null}
     </>

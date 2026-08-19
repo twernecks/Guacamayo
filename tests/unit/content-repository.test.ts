@@ -3,12 +3,19 @@ import type { ContentRepository } from "@/services/content-repository";
 import { contentRepository, isContentEmpty, loadContentState } from "@/services/content-repository";
 import type { PousadaContent } from "@/domain/content";
 
+const loc = (pt: string) => ({ pt, en: pt, es: pt });
+
 const EMPTY_CONTENT: PousadaContent = {
   rooms: [],
   eventSpaces: [],
   testimonials: [],
   contact: { whatsappNumber: "+5500000000000", address: "Endereço a confirmar" },
-  location: { address: "Endereço a confirmar", mapEmbedUrl: "", fallbackMapUrl: "" },
+  location: {
+    address: "Endereço a confirmar",
+    coordinates: { lat: 0, lng: 0 },
+    mapEmbedUrl: "",
+    fallbackMapUrl: "",
+  },
 };
 
 function repositoryResolvingTo(content: PousadaContent): ContentRepository {
@@ -34,8 +41,8 @@ describe("isContentEmpty", () => {
       rooms: [
         {
           id: "quarto-1",
-          name: "Quarto",
-          summary: "Resumo",
+          name: loc("Quarto"),
+          summary: loc("Resumo"),
           amenities: [],
           images: [],
           contactContext: "stay",
