@@ -6,6 +6,7 @@ import { Heading } from "@/components/ui/Heading";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import styles from "./LocationSection.module.css";
 
 type LocationSectionProps = {
@@ -16,9 +17,19 @@ export function LocationSection({ location }: LocationSectionProps) {
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const { t } = useLanguage();
   const canLoadMap = Boolean(location.mapEmbedUrl);
+  const { ref, isVisible } = useScrollReveal<HTMLElement>();
+  const sectionClassName = [
+    styles.section,
+    "textureGrain",
+    "organicTop",
+    "scrollReveal",
+    isVisible ? "isRevealed" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <section id="localizacao" aria-labelledby="location-heading" className={styles.section}>
+    <section ref={ref} id="localizacao" aria-labelledby="location-heading" className={sectionClassName}>
       <Container>
         <Heading as="h2" size="lg" id="location-heading">
           {t.location.heading}

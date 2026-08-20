@@ -12,13 +12,29 @@ export type Media = {
   caption?: LocalizedText;
 };
 
+export type AmenityKey =
+  | "wifi"
+  | "airConditioning"
+  | "breakfast"
+  | "pool"
+  | "privateBathroom"
+  | "miniFridge"
+  | "seaView";
+
+export type RoomAmenity = {
+  key: AmenityKey;
+  label: LocalizedText;
+};
+
 export type Room = {
   id: string;
   name: LocalizedText;
   summary: LocalizedText;
-  amenities: LocalizedText[];
+  amenities: RoomAmenity[];
   images: Media[];
   contactContext: "stay";
+  /** Drives editorial grid variation (FR-002); absent is treated as "standard". */
+  visualEmphasis?: "standard" | "featured";
 };
 
 export type EventSpace = {
@@ -61,6 +77,7 @@ export type Location = {
 };
 
 export type PousadaContent = {
+  hero: { image: Media };
   rooms: Room[];
   eventSpaces: EventSpace[];
   testimonials: Testimonial[];

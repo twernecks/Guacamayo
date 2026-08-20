@@ -6,6 +6,9 @@ import type { PousadaContent } from "@/domain/content";
 const loc = (pt: string) => ({ pt, en: pt, es: pt });
 
 const EMPTY_CONTENT: PousadaContent = {
+  hero: {
+    image: { src: "/images/hero.jpg", alt: loc("Hero"), width: 1024, height: 576 },
+  },
   rooms: [],
   eventSpaces: [],
   testimonials: [],

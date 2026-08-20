@@ -143,3 +143,68 @@ ol {
   white-space: nowrap;
   border: 0;
 }
+
+/* Fade-only entrance used by useScrollReveal (FR-005/FR-012): opacity + a
+   small translateY, never paralaxe/elaborate sequencing. Under
+   prefers-reduced-motion, this rule (not the hook) is what disables the
+   fade — it shows every `.scrollReveal` element immediately regardless of
+   the `isRevealed` class, since the hook itself does not special-case
+   reduced motion (see useScrollReveal.ts). */
+.scrollReveal {
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+
+.scrollReveal.isRevealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollReveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Subtle grain overlay for the "Nature Distilled" texture language (FR-003).
+   Opacity-based on top of each section's own background, so it stays
+   legible in both light and dark mode without a second, theme-specific
+   asset. */
+.textureGrain {
+  position: relative;
+  isolation: isolate;
+}
+
+.textureGrain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.textureGrain > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Gentle curved section boundary in place of a straight border-top/bottom
+   line (FR-003) — a wide elliptical corner radius on the section's own
+   background reads as a soft wave without a new SVG asset. */
+.organicTop {
+  border-top-left-radius: 50% 2.5rem;
+  border-top-right-radius: 50% 2.5rem;
+}
+
+.organicBottom {
+  border-bottom-left-radius: 50% 2.5rem;
+  border-bottom-right-radius: 50% 2.5rem;
+}

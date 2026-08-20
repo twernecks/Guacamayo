@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import "./globals.css";
@@ -10,12 +10,13 @@ const bodyFont = Inter({
   display: "swap",
 });
 
-const headingFont = Playfair_Display({
+const headingFont = Fraunces({
   variable: "--font-display",
   subsets: ["latin"],
-  // "optional" (not "swap"): the H1 is the LCP element on this page, and a
-  // font swap after first paint can delay the LCP timestamp. This keeps the
-  // fallback font on slow connections instead of trading LCP for brand font.
+  // "optional" (not "swap"): a font swap after first paint would shift
+  // every heading on the page, not just the hero. This keeps the fallback
+  // font on slow connections instead of trading layout stability for the
+  // brand font.
   display: "optional",
 });
 

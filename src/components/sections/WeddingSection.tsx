@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { WhatsAppContact } from "@/components/contact/WhatsAppContact";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { MediaGallery } from "./MediaGallery";
 import styles from "./WeddingSection.module.css";
 
@@ -16,15 +17,26 @@ type WeddingSectionProps = {
 
 export function WeddingSection({ wedding, contact }: WeddingSectionProps) {
   const { t, localize } = useLanguage();
+  const { ref, isVisible } = useScrollReveal<HTMLElement>();
 
   if (!wedding) {
     return null;
   }
 
   const name = localize(wedding.name);
+  const sectionClassName = [
+    styles.section,
+    "textureGrain",
+    "organicTop",
+    "organicBottom",
+    "scrollReveal",
+    isVisible ? "isRevealed" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <section id="casamentos" aria-labelledby="wedding-heading" className={styles.section}>
+    <section ref={ref} id="casamentos" aria-labelledby="wedding-heading" className={sectionClassName}>
       <Container className={styles.inner}>
         <div className={styles.copy}>
           <p className={styles.eyebrow}>{t.wedding.eyebrow}</p>

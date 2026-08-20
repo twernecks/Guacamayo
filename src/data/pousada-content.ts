@@ -24,9 +24,22 @@ import type { PousadaContent } from "@/domain/content";
  * (research.md Decision 3) rather than the paid Maps Embed API.
  */
 export const pousadaContent: PousadaContent = {
+  hero: {
+    image: {
+      src: "/images/pousada/quartos/local-casamento-06.jpg",
+      alt: {
+        pt: "Vista aérea da sede da pousada com telhado colonial, piscina e jardim exuberante",
+        en: "Aerial view of the guesthouse's main building with its colonial roof, pool and lush garden",
+        es: "Vista aérea de la sede de la posada con techo colonial, piscina y exuberante jardín",
+      },
+      width: 1024,
+      height: 576,
+    },
+  },
   rooms: [
     {
       id: "quarto-duplo-deluxe-vista-mar",
+      visualEmphasis: "featured",
       name: {
         pt: "Quarto Duplo Deluxe com Vista do Mar",
         en: "Deluxe Double Room with Sea View",
@@ -38,13 +51,22 @@ export const pousadaContent: PousadaContent = {
         es: "Excelente habitación con una vista impresionante al mar.",
       },
       amenities: [
-        { pt: "Café da manhã incluso", en: "Breakfast included", es: "Desayuno incluido" },
-        { pt: "Acesso à piscina", en: "Pool access", es: "Acceso a la piscina" },
-        { pt: "Wi-Fi", en: "Wi-Fi", es: "Wi-Fi" },
-        { pt: "Ar-condicionado", en: "Air conditioning", es: "Aire acondicionado" },
-        { pt: "Banheiro privativo", en: "Private bathroom", es: "Baño privado" },
-        { pt: "Frigobar", en: "Mini fridge", es: "Minibar" },
-        { pt: "Vista do mar", en: "Sea view", es: "Vista al mar" },
+        {
+          key: "breakfast",
+          label: { pt: "Café da manhã incluso", en: "Breakfast included", es: "Desayuno incluido" },
+        },
+        { key: "pool", label: { pt: "Acesso à piscina", en: "Pool access", es: "Acceso a la piscina" } },
+        { key: "wifi", label: { pt: "Wi-Fi", en: "Wi-Fi", es: "Wi-Fi" } },
+        {
+          key: "airConditioning",
+          label: { pt: "Ar-condicionado", en: "Air conditioning", es: "Aire acondicionado" },
+        },
+        {
+          key: "privateBathroom",
+          label: { pt: "Banheiro privativo", en: "Private bathroom", es: "Baño privado" },
+        },
+        { key: "miniFridge", label: { pt: "Frigobar", en: "Mini fridge", es: "Minibar" } },
+        { key: "seaView", label: { pt: "Vista do mar", en: "Sea view", es: "Vista al mar" } },
       ],
       images: [
         {
@@ -113,11 +135,20 @@ export const pousadaContent: PousadaContent = {
         es: "Excelente habitación integrada naturalmente con la roca, que ofrece una experiencia única.",
       },
       amenities: [
-        { pt: "Café da manhã incluso", en: "Breakfast included", es: "Desayuno incluido" },
-        { pt: "Acesso à piscina", en: "Pool access", es: "Acceso a la piscina" },
-        { pt: "Wi-Fi", en: "Wi-Fi", es: "Wi-Fi" },
-        { pt: "Ar-condicionado", en: "Air conditioning", es: "Aire acondicionado" },
-        { pt: "Banheiro privativo", en: "Private bathroom", es: "Baño privado" },
+        {
+          key: "breakfast",
+          label: { pt: "Café da manhã incluso", en: "Breakfast included", es: "Desayuno incluido" },
+        },
+        { key: "pool", label: { pt: "Acesso à piscina", en: "Pool access", es: "Acceso a la piscina" } },
+        { key: "wifi", label: { pt: "Wi-Fi", en: "Wi-Fi", es: "Wi-Fi" } },
+        {
+          key: "airConditioning",
+          label: { pt: "Ar-condicionado", en: "Air conditioning", es: "Aire acondicionado" },
+        },
+        {
+          key: "privateBathroom",
+          label: { pt: "Banheiro privativo", en: "Private bathroom", es: "Baño privado" },
+        },
       ],
       images: [
         {
@@ -146,11 +177,20 @@ export const pousadaContent: PousadaContent = {
         es: "Excelente habitación con una vista impresionante al jardín.",
       },
       amenities: [
-        { pt: "Café da manhã incluso", en: "Breakfast included", es: "Desayuno incluido" },
-        { pt: "Acesso à piscina", en: "Pool access", es: "Acceso a la piscina" },
-        { pt: "Wi-Fi", en: "Wi-Fi", es: "Wi-Fi" },
-        { pt: "Ar-condicionado", en: "Air conditioning", es: "Aire acondicionado" },
-        { pt: "Banheiro privativo", en: "Private bathroom", es: "Baño privado" },
+        {
+          key: "breakfast",
+          label: { pt: "Café da manhã incluso", en: "Breakfast included", es: "Desayuno incluido" },
+        },
+        { key: "pool", label: { pt: "Acesso à piscina", en: "Pool access", es: "Acceso a la piscina" } },
+        { key: "wifi", label: { pt: "Wi-Fi", en: "Wi-Fi", es: "Wi-Fi" } },
+        {
+          key: "airConditioning",
+          label: { pt: "Ar-condicionado", en: "Air conditioning", es: "Aire acondicionado" },
+        },
+        {
+          key: "privateBathroom",
+          label: { pt: "Banheiro privativo", en: "Private bathroom", es: "Baño privado" },
+        },
       ],
       images: [
         {
@@ -199,11 +239,20 @@ export const pousadaContent: PousadaContent = {
         es: "Excelente habitación espaciosa para familias, con alojamiento confortable.",
       },
       amenities: [
-        { pt: "Café da manhã incluso", en: "Breakfast included", es: "Desayuno incluido" },
-        { pt: "Acesso à piscina", en: "Pool access", es: "Acceso a la piscina" },
-        { pt: "Wi-Fi", en: "Wi-Fi", es: "Wi-Fi" },
-        { pt: "Ar-condicionado", en: "Air conditioning", es: "Aire acondicionado" },
-        { pt: "Banheiro privativo", en: "Private bathroom", es: "Baño privado" },
+        {
+          key: "breakfast",
+          label: { pt: "Café da manhã incluso", en: "Breakfast included", es: "Desayuno incluido" },
+        },
+        { key: "pool", label: { pt: "Acesso à piscina", en: "Pool access", es: "Acceso a la piscina" } },
+        { key: "wifi", label: { pt: "Wi-Fi", en: "Wi-Fi", es: "Wi-Fi" } },
+        {
+          key: "airConditioning",
+          label: { pt: "Ar-condicionado", en: "Air conditioning", es: "Aire acondicionado" },
+        },
+        {
+          key: "privateBathroom",
+          label: { pt: "Banheiro privativo", en: "Private bathroom", es: "Baño privado" },
+        },
       ],
       images: [
         {
@@ -262,11 +311,20 @@ export const pousadaContent: PousadaContent = {
         es: "Excelente habitación con alojamiento clásico y confortable para tres personas.",
       },
       amenities: [
-        { pt: "Café da manhã incluso", en: "Breakfast included", es: "Desayuno incluido" },
-        { pt: "Acesso à piscina", en: "Pool access", es: "Acceso a la piscina" },
-        { pt: "Wi-Fi", en: "Wi-Fi", es: "Wi-Fi" },
-        { pt: "Ar-condicionado", en: "Air conditioning", es: "Aire acondicionado" },
-        { pt: "Banheiro privativo", en: "Private bathroom", es: "Baño privado" },
+        {
+          key: "breakfast",
+          label: { pt: "Café da manhã incluso", en: "Breakfast included", es: "Desayuno incluido" },
+        },
+        { key: "pool", label: { pt: "Acesso à piscina", en: "Pool access", es: "Acceso a la piscina" } },
+        { key: "wifi", label: { pt: "Wi-Fi", en: "Wi-Fi", es: "Wi-Fi" } },
+        {
+          key: "airConditioning",
+          label: { pt: "Ar-condicionado", en: "Air conditioning", es: "Aire acondicionado" },
+        },
+        {
+          key: "privateBathroom",
+          label: { pt: "Banheiro privativo", en: "Private bathroom", es: "Baño privado" },
+        },
       ],
       images: [
         {
@@ -305,11 +363,20 @@ export const pousadaContent: PousadaContent = {
         es: "Excelente habitación con una vista impresionante al jardín, ideal para grupos de tres personas.",
       },
       amenities: [
-        { pt: "Café da manhã incluso", en: "Breakfast included", es: "Desayuno incluido" },
-        { pt: "Acesso à piscina", en: "Pool access", es: "Acceso a la piscina" },
-        { pt: "Wi-Fi", en: "Wi-Fi", es: "Wi-Fi" },
-        { pt: "Ar-condicionado", en: "Air conditioning", es: "Aire acondicionado" },
-        { pt: "Banheiro privativo", en: "Private bathroom", es: "Baño privado" },
+        {
+          key: "breakfast",
+          label: { pt: "Café da manhã incluso", en: "Breakfast included", es: "Desayuno incluido" },
+        },
+        { key: "pool", label: { pt: "Acesso à piscina", en: "Pool access", es: "Acceso a la piscina" } },
+        { key: "wifi", label: { pt: "Wi-Fi", en: "Wi-Fi", es: "Wi-Fi" } },
+        {
+          key: "airConditioning",
+          label: { pt: "Ar-condicionado", en: "Air conditioning", es: "Aire acondicionado" },
+        },
+        {
+          key: "privateBathroom",
+          label: { pt: "Banheiro privativo", en: "Private bathroom", es: "Baño privado" },
+        },
       ],
       images: [
         {
@@ -347,6 +414,7 @@ export const pousadaContent: PousadaContent = {
     },
     {
       id: "quarto-triplo-vista-piscina",
+      visualEmphasis: "featured",
       name: {
         pt: "Quarto Triplo com Vista da Piscina",
         en: "Triple Room with Pool View",
@@ -358,11 +426,20 @@ export const pousadaContent: PousadaContent = {
         es: "Excelente habitación con una vista impresionante a la piscina, ideal para grupos de tres personas.",
       },
       amenities: [
-        { pt: "Café da manhã incluso", en: "Breakfast included", es: "Desayuno incluido" },
-        { pt: "Acesso à piscina", en: "Pool access", es: "Acceso a la piscina" },
-        { pt: "Wi-Fi", en: "Wi-Fi", es: "Wi-Fi" },
-        { pt: "Ar-condicionado", en: "Air conditioning", es: "Aire acondicionado" },
-        { pt: "Banheiro privativo", en: "Private bathroom", es: "Baño privado" },
+        {
+          key: "breakfast",
+          label: { pt: "Café da manhã incluso", en: "Breakfast included", es: "Desayuno incluido" },
+        },
+        { key: "pool", label: { pt: "Acesso à piscina", en: "Pool access", es: "Acceso a la piscina" } },
+        { key: "wifi", label: { pt: "Wi-Fi", en: "Wi-Fi", es: "Wi-Fi" } },
+        {
+          key: "airConditioning",
+          label: { pt: "Ar-condicionado", en: "Air conditioning", es: "Aire acondicionado" },
+        },
+        {
+          key: "privateBathroom",
+          label: { pt: "Banheiro privativo", en: "Private bathroom", es: "Baño privado" },
+        },
       ],
       images: [
         {

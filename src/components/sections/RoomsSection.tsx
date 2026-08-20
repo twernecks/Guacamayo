@@ -3,8 +3,10 @@
 import type { Room } from "@/domain/content";
 import { Heading } from "@/components/ui/Heading";
 import { Container } from "@/components/ui/Container";
+import { AMENITY_ICONS } from "@/components/ui/icons/amenity-icons";
 import { useLanguage } from "@/i18n/LanguageContext";
 import type { Messages } from "@/i18n/messages";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { MediaGallery } from "./MediaGallery";
 import styles from "./RoomsSection.module.css";
 
@@ -25,9 +27,22 @@ function RoomCard({
 }) {
   const headingId = `room-${room.id}-heading`;
   const name = localize(room.name);
+  const isFeatured = room.visualEmphasis === "featured";
+  const { ref, isVisible } = useScrollReveal<HTMLLIElement>();
 
   return (
-    <li className={styles.card} aria-labelledby={headingId}>
+    <li
+      ref={ref}
+      className={[
+        styles.card,
+        isFeatured ? styles.featured : "",
+        "scrollReveal",
+        isVisible ? "isRevealed" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      aria-labelledby={headingId}
+    >
       <MediaGallery
         images={room.images}
         emptyLabel={t.rooms.galleryEmptyLabel}
@@ -41,9 +56,15 @@ function RoomCard({
         <p>{localize(room.summary)}</p>
         {room.amenities.length > 0 ? (
           <ul className={styles.amenities} aria-label={t.rooms.amenitiesAriaLabel(name)}>
-            {room.amenities.map((amenity, index) => (
-              <li key={index}>{localize(amenity)}</li>
-            ))}
+            {room.amenities.map((amenity) => {
+              const AmenityIcon = AMENITY_ICONS[amenity.key];
+              return (
+                <li key={amenity.key}>
+                  <AmenityIcon className={styles.amenityIcon} />
+                  <span>{localize(amenity.label)}</span>
+                </li>
+              );
+            })}
           </ul>
         ) : null}
       </div>
@@ -55,7 +76,11 @@ export function RoomsSection({ rooms }: RoomsSectionProps) {
   const { t, localize } = useLanguage();
 
   return (
-    <section id="quartos" aria-labelledby="rooms-heading" className={styles.section}>
+    <section
+      id="quartos"
+      aria-labelledby="rooms-heading"
+      className={`${styles.section} textureGrain`}
+    >
       <Container>
         <Heading as="h2" size="lg" id="rooms-heading">
           {t.rooms.heading}

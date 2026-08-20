@@ -7,6 +7,7 @@ import { Container } from "@/components/ui/Container";
 import { CarouselControls } from "@/components/ui/CarouselControls";
 import { interestLabel } from "@/lib/whatsapp";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import styles from "./TestimonialsSection.module.css";
 
 type TestimonialsSectionProps = {
@@ -18,6 +19,10 @@ export function TestimonialsSection({ testimonials }: TestimonialsSectionProps) 
   const cardRefs = useRef<Array<HTMLLIElement | null>>([]);
   const total = testimonials.length;
   const { language, t, localize } = useLanguage();
+  const { ref, isVisible } = useScrollReveal<HTMLElement>();
+  const sectionClassName = [styles.section, "textureGrain", "scrollReveal", isVisible ? "isRevealed" : ""]
+    .filter(Boolean)
+    .join(" ");
 
   // Tracks which card is centered in view as the visitor swipes, so the
   // position indicator ("N de M") stays in sync with free-form scrolling,
@@ -73,7 +78,7 @@ export function TestimonialsSection({ testimonials }: TestimonialsSectionProps) 
   }
 
   return (
-    <section id="relatos" aria-labelledby="testimonials-heading" className={styles.section}>
+    <section ref={ref} id="relatos" aria-labelledby="testimonials-heading" className={sectionClassName}>
       <Container>
         <Heading as="h2" size="lg" id="testimonials-heading">
           {t.testimonials.heading}
@@ -106,9 +111,10 @@ export function TestimonialsSection({ testimonials }: TestimonialsSectionProps) 
                   }}
                   className={styles.card}
                 >
-                  <blockquote className={styles.quote}>
-                    &ldquo;{localize(testimonial.quote)}&rdquo;
-                  </blockquote>
+                  <span className={styles.quoteMark} aria-hidden="true">
+                    &ldquo;
+                  </span>
+                  <blockquote className={styles.quote}>{localize(testimonial.quote)}</blockquote>
                   <p className={styles.attribution}>
                     {testimonial.attribution} ·{" "}
                     <span className={styles.experience}>

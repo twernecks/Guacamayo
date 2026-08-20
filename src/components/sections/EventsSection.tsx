@@ -5,6 +5,7 @@ import { Heading } from "@/components/ui/Heading";
 import { Container } from "@/components/ui/Container";
 import { WhatsAppContact } from "@/components/contact/WhatsAppContact";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { MediaGallery } from "./MediaGallery";
 import styles from "./EventsSection.module.css";
 
@@ -15,13 +16,18 @@ type EventsSectionProps = {
 
 export function EventsSection({ events, contact }: EventsSectionProps) {
   const { t, localize } = useLanguage();
+  const { ref, isVisible } = useScrollReveal<HTMLElement>();
 
   if (events.length === 0) {
     return null;
   }
 
+  const sectionClassName = [styles.section, "textureGrain", "scrollReveal", isVisible ? "isRevealed" : ""]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <section id="eventos" aria-labelledby="events-heading" className={styles.section}>
+    <section ref={ref} id="eventos" aria-labelledby="events-heading" className={sectionClassName}>
       <Container>
         <Heading as="h2" size="lg" id="events-heading">
           {t.events.heading}

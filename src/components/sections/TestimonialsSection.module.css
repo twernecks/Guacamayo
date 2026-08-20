@@ -47,10 +47,19 @@
   border-radius: var(--radius-lg);
 }
 
+.quoteMark {
+  font-family: var(--font-heading);
+  font-size: 2.75rem;
+  line-height: 1;
+  color: var(--color-accent);
+}
+
 .quote {
   margin: 0;
   font-family: var(--font-heading);
   font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.45;
   /* Keeps an unusually long testimonial from growing the card past a
      readable height; the attribution below always stays visible. */
   max-height: 40vh;

@@ -11,7 +11,7 @@ import { LocationSection } from "@/components/sections/LocationSection";
 import { SiteHeader } from "@/components/ui/SiteHeader";
 import { SiteFooter } from "@/components/ui/SiteFooter";
 import { ContactForm } from "@/components/contact/ContactForm";
-import type { ContactChannels, EventSpace, Location, Room, Testimonial } from "@/domain/content";
+import type { ContactChannels, EventSpace, Location, Media, Room, Testimonial } from "@/domain/content";
 import { loc, renderWithLanguage } from "../test-utils";
 
 /**
@@ -35,11 +35,21 @@ const CONTACT: ContactChannels = {
   address: "Endereço a confirmar",
 };
 
+const HERO_IMAGE: Media = {
+  src: "/images/pousada/quartos/local-casamento-06.jpg",
+  alt: loc("Vista aérea da sede da pousada"),
+  width: 1024,
+  height: 576,
+};
+
 const ROOM: Room = {
   id: "quarto-jardim",
   name: loc("Quarto Jardim"),
   summary: loc("Vista para o jardim com varanda privativa."),
-  amenities: [loc("Wi-Fi"), loc("Ar-condicionado")],
+  amenities: [
+    { key: "wifi", label: loc("Wi-Fi") },
+    { key: "airConditioning", label: loc("Ar-condicionado") },
+  ],
   images: [],
   contactContext: "stay",
 };
@@ -48,7 +58,7 @@ const ROOM_WITH_PHOTOS: Room = {
   id: "quarto-varanda",
   name: loc("Quarto Varanda"),
   summary: loc("Quarto com varanda privativa."),
-  amenities: [loc("Wi-Fi")],
+  amenities: [{ key: "wifi", label: loc("Wi-Fi") }],
   images: [
     {
       src: "/images/pousada/quarto-varanda-1.avif",
@@ -102,7 +112,7 @@ const LOCATION: Location = {
 
 describe("Accessibility of primary sections", () => {
   it("HeroSection has no automatically detectable violations", async () => {
-    const { container } = renderWithLanguage(<HeroSection contact={CONTACT} />);
+    const { container } = renderWithLanguage(<HeroSection contact={CONTACT} image={HERO_IMAGE} />);
     expect(await axe(container, AXE_OPTIONS)).toHaveNoViolations();
   });
 

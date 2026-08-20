@@ -19,7 +19,7 @@ function ReadyPage({ content }: { content: PousadaContent }) {
     <>
       <SiteHeader contact={content.contact} />
       <main id="conteudo-principal">
-        <HeroSection contact={content.contact} />
+        <HeroSection contact={content.contact} image={content.hero.image} />
         <RoomsSection rooms={content.rooms} />
         <WeddingSection wedding={wedding} contact={content.contact} />
         <EventsSection events={events} contact={content.contact} />

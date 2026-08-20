@@ -1,8 +1,6 @@
 .section {
   padding-block: var(--space-16);
   background: linear-gradient(180deg, var(--color-background) 0%, var(--color-surface) 100%);
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
 }
 
 .inner {

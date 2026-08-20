@@ -3,7 +3,7 @@ import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { RoomsSection } from "@/components/sections/RoomsSection";
-import type { ContactChannels, Room } from "@/domain/content";
+import type { ContactChannels, Media, Room } from "@/domain/content";
 import { loc, renderWithLanguage } from "../test-utils";
 
 const CONTACT: ContactChannels = {
@@ -11,11 +11,21 @@ const CONTACT: ContactChannels = {
   address: "Endereço a confirmar",
 };
 
+const HERO_IMAGE: Media = {
+  src: "/images/pousada/quartos/local-casamento-06.jpg",
+  alt: loc("Vista aérea da sede da pousada"),
+  width: 1024,
+  height: 576,
+};
+
 const ROOM_WITH_IMAGE: Room = {
   id: "quarto-jardim",
   name: loc("Quarto Jardim"),
   summary: loc("Vista para o jardim com varanda privativa."),
-  amenities: [loc("Wi-Fi"), loc("Ar-condicionado")],
+  amenities: [
+    { key: "wifi", label: loc("Wi-Fi") },
+    { key: "airConditioning", label: loc("Ar-condicionado") },
+  ],
   images: [
     { src: "/images/pousada/quarto-jardim.avif", alt: loc("Quarto Jardim"), width: 800, height: 600 },
   ],
@@ -26,7 +36,10 @@ const ROOM_WITH_MULTIPLE_IMAGES: Room = {
   id: "quarto-jardim",
   name: loc("Quarto Jardim"),
   summary: loc("Vista para o jardim com varanda privativa."),
-  amenities: [loc("Wi-Fi"), loc("Ar-condicionado")],
+  amenities: [
+    { key: "wifi", label: loc("Wi-Fi") },
+    { key: "airConditioning", label: loc("Ar-condicionado") },
+  ],
   images: [
     {
       src: "/images/pousada/quarto-jardim-1.avif",
@@ -55,7 +68,7 @@ const ROOM_WITHOUT_IMAGE: Room = {
 
 describe("HeroSection", () => {
   it("renders a heading and a WhatsApp contact action for the stay interest", () => {
-    renderWithLanguage(<HeroSection contact={CONTACT} />);
+    renderWithLanguage(<HeroSection contact={CONTACT} image={HERO_IMAGE} />);
 
     expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
 
@@ -113,5 +126,27 @@ describe("RoomsSection", () => {
 
     expect(screen.getByRole("heading", { name: /quartos/i })).toBeInTheDocument();
     expect(screen.getByText(/em breve/i)).toBeInTheDocument();
+  });
+
+  it("renders an icon alongside each amenity's label, in addition to the text (FR-004)", () => {
+    renderWithLanguage(<RoomsSection rooms={[ROOM_WITH_IMAGE]} />);
+
+    const amenitiesList = screen.getByRole("list", { name: /comodidades de quarto jardim/i });
+    const items = within(amenitiesList).getAllByRole("listitem");
+
+    expect(items).toHaveLength(2);
+    for (const item of items) {
+      expect(item.querySelector("svg")).not.toBeNull();
+    }
+  });
+
+  it("gives a room marked visualEmphasis 'featured' a distinct visual treatment (FR-002)", () => {
+    const featuredRoom: Room = { ...ROOM_WITH_IMAGE, visualEmphasis: "featured" };
+    renderWithLanguage(<RoomsSection rooms={[ROOM_WITH_IMAGE, featuredRoom]} />);
+
+    const cards = screen.getAllByRole("listitem", { name: /quarto jardim/i });
+    expect(cards).toHaveLength(2);
+    const [standardCard, featuredCard] = cards;
+    expect(standardCard!.className).not.toBe(featuredCard!.className);
   });
 });
