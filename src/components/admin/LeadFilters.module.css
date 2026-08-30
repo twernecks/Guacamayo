@@ -1,0 +1,19 @@
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.field {
+  margin-bottom: 0;
+  min-width: 10rem;
+}
+
+.error {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--color-accent-strong);
+  font-size: 0.875rem;
+}

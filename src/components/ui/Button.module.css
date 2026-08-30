@@ -54,3 +54,15 @@
     background: var(--color-surface);
   }
 }
+
+.destructive {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  border-color: var(--color-accent-strong);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .destructive:hover {
+    background: var(--color-accent-strong);
+  }
+}

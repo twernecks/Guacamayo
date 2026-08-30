@@ -1,0 +1,9 @@
+.conflictBanner {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.message {
+  margin: 0;
+}

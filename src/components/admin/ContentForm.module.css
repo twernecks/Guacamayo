@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  font-weight: 600;
+}
+
+.checkboxRow input {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.submit {
+  align-self: flex-start;
+  margin-top: var(--space-2);
+}

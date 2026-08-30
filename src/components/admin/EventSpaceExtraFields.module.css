@@ -1,0 +1,15 @@
+.wrapper {
+  margin-bottom: var(--space-4);
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 600;
+}
+
+.checkboxRow input {
+  width: 1.25rem;
+  height: 1.25rem;
+}

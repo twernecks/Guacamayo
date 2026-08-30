@@ -1,7 +1,7 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
 import styles from "./Button.module.css";
 
-type ButtonVariant = "primary" | "accent" | "secondary";
+type ButtonVariant = "primary" | "accent" | "secondary" | "destructive";
 
 type BaseProps = {
   variant?: ButtonVariant;
